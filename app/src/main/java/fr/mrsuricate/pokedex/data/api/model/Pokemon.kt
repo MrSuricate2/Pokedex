@@ -7,7 +7,6 @@ import fr.mrsuricate.pokedex.domain.model.Pokemon
 import fr.mrsuricate.pokedex.domain.model.Stats
 import fr.mrsuricate.pokedex.domain.model.Type
 
-
 data class PokemonJsonModel(
     @SerializedName("id") var id: Int = 0,
     @SerializedName("name") var name: String = String(),
@@ -67,7 +66,7 @@ data class PokemonJsonModel(
                 }
             })
         }
-        return listTypes.toList()
+        return listTypes
     }
 
     private fun getStats(): List<Stats> {
@@ -75,6 +74,6 @@ data class PokemonJsonModel(
         this.stats.forEach { stat ->
             listStats.add(stat.toDomain())
         }
-        return listStats.toList()
+        return listStats
     }
 }

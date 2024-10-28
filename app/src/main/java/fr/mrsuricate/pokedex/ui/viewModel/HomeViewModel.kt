@@ -1,7 +1,6 @@
 package fr.mrsuricate.pokedex.ui.viewModel
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fr.mrsuricate.pokedex.data.api.PokemonApi
@@ -51,7 +50,6 @@ class HomeViewModel : ViewModel() {
                 pokemonResponse.results.forEach {
                     getPokemonList(name = it.name)
                 }
-                Log.d("HomeViewModel", pokemonData.value.pokemons.size.toString())
             }
         })
     }
@@ -67,10 +65,6 @@ class HomeViewModel : ViewModel() {
                             pokemons.toMutableList().apply { add(pokemon.toDomain()) }
                         copy(pokemons = updatedPokemons.sortedBy { it.id })
                     }
-                    Log.d(
-                        "HomeViewModel",
-                        "Taille de la liste de Pokémon : ${pokemonData.value.pokemons.size}"
-                    )
                 }
             }
         })
