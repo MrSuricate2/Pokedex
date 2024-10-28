@@ -2,8 +2,10 @@ package fr.mrsuricate.pokedex.data.api.model
 
 import com.google.gson.annotations.SerializedName
 import fr.mrsuricate.pokedex.data.api.PokemonApi
+import fr.mrsuricate.pokedex.domain.model.Name
 import fr.mrsuricate.pokedex.domain.model.Pokemon
-import fr.mrsuricate.pokedex.domain.model.Species
+import fr.mrsuricate.pokedex.domain.model.Stats
+import fr.mrsuricate.pokedex.domain.model.Type
 
 
 data class PokemonJsonModel(
@@ -32,21 +34,47 @@ data class PokemonJsonModel(
     fun toDomain(): Pokemon {
         return Pokemon(
             id = this.id,
-            name = this.name,
+            names = this.getNames(),
             baseExperience = this.baseExperience,
             height = this.height,
-            isDefault = this.isDefault,
             weight = this.weight,
-            species = this.getSpecies(),
+            image = this.getSprites(),
+            types = this.getTypes(),
+            stats = this.getStats()
         )
     }
 
-    fun getSpecies(): Species {
+    private fun getNames(): List<Name> {
         val speciesResponse = PokemonApi.apiService.getSpecies(this.id)
-        var species = Species(0, "", listOf())
+        val listNames: MutableList<Name> = mutableListOf()
         PokemonApi.executeApiCall(speciesResponse, onSuccess = {
-            species = it.body()?.toDomain()!!
+            it.body()?.let { it1 -> listNames.addAll(it1.toDomain()) }
         })
-        return species
+        return listNames
+    }
+
+    private fun getSprites(): String {
+        return this.sprites.other.dreamWorld.frontDefault ?: ""
+    }
+
+    private fun getTypes(): List<Type> {
+        val listTypes: MutableList<Type> = mutableListOf()
+        this.types.forEach { type ->
+            val typeCall = PokemonApi.apiService.getType(name = type.type.name)
+            PokemonApi.executeApiCall(typeCall, onSuccess = { response ->
+                response.body()?.let {
+                    listTypes.add(it.toDomain())
+                }
+            })
+        }
+        return listTypes.toList()
+    }
+
+    private fun getStats(): List<Stats> {
+        val listStats: MutableList<Stats> = mutableListOf()
+        this.stats.forEach { stat ->
+            listStats.add(stat.toDomain())
+        }
+        return listStats.toList()
     }
 }

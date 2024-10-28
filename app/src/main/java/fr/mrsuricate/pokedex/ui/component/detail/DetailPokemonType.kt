@@ -9,11 +9,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import fr.mrsuricate.pokedex.data.api.model.Language
-import fr.mrsuricate.pokedex.data.api.model.Types
+import fr.mrsuricate.pokedex.domain.model.Type
 
 @Composable
 fun DetailPokemonType(
-    types: List<Types>,
+    types: List<Type>,
     lang: Language
 ) {
     Row(

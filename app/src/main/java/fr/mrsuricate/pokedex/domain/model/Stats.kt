@@ -1,7 +1,7 @@
 package fr.mrsuricate.pokedex.domain.model
 
-class Species(
-    var id: Int,
+class Stats(
     val name: String,
-    val names: List<Name>,
-)
+    val baseStat: Int
+) {
+}

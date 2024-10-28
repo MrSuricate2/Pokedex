@@ -1,36 +1,34 @@
 package fr.mrsuricate.pokedex.data.api
 
 import android.util.Log
-import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.security.cert.X509Certificate
-import javax.net.ssl.SSLContext
-import javax.net.ssl.X509TrustManager
 
 object PokemonApi {
     private const val BASE_URL = "https://pokeapi.co/api/v2/"
 
-    val trustManager = object : X509TrustManager {
-        override fun getAcceptedIssuers(): Array<X509Certificate>? = arrayOf()
-        override fun checkClientTrusted(certs: Array<X509Certificate>, authType: String) {}
-        override fun checkServerTrusted(certs: Array<X509Certificate>, authType: String) {}
-    }
-
-    val sslContext = SSLContext.getInstance("SSL").apply {
-        init(null, arrayOf(trustManager), java.security.SecureRandom())
-    }
-
-    val client = OkHttpClient.Builder()
-        .sslSocketFactory(sslContext.socketFactory, trustManager)
-        .build()
+    //todo barre de recherhe
+//
+//    val trustManager = object : X509TrustManager {
+//        override fun getAcceptedIssuers(): Array<X509Certificate>? = arrayOf()
+//        override fun checkClientTrusted(certs: Array<X509Certificate>, authType: String) {}
+//        override fun checkServerTrusted(certs: Array<X509Certificate>, authType: String) {}
+//    }
+//
+//    val sslContext = SSLContext.getInstance("SSL").apply {
+//        init(null, arrayOf(trustManager), java.security.SecureRandom())
+//    }
+//
+//    val client = OkHttpClient.Builder()
+//        .sslSocketFactory(sslContext.socketFactory, trustManager)
+//        .build()
 
     private val retrofit: Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .client(client)
+//        .client(client)
         .baseUrl(BASE_URL)
         .build()
 

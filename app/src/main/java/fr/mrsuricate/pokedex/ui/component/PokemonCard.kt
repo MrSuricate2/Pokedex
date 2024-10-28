@@ -15,14 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import fr.mrsuricate.pokedex.data.api.model.Language
-import fr.mrsuricate.pokedex.data.api.model.PokemonJsonModel
+import fr.mrsuricate.pokedex.domain.model.Pokemon
 import fr.mrsuricate.pokedex.ui.navigation.Detail
 import fr.mrsuricate.pokedex.ui.viewModel.DetailViewModel
 
 @Composable
 fun PokemonCard(
     detailViewModel: DetailViewModel,
-    pokemon: PokemonJsonModel,
+    pokemon: Pokemon,
     modifier: Modifier = Modifier,
     navController: NavHostController,
     lang: Language
@@ -52,8 +52,10 @@ fun PokemonCard(
             )
 
         }
-        PokemonName(
-            name = pokemon.getSpecies().names.find { it.language == lang.name }?.name ?: ""
-        )
+        pokemon.names.find { it.language == lang.name }?.name?.let {
+            PokemonName(
+                name = it
+            )
+        }
     }
 }

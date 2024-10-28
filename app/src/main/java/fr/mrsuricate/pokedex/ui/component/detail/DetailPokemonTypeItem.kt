@@ -9,11 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import fr.mrsuricate.pokedex.data.api.model.Language
-import fr.mrsuricate.pokedex.data.api.model.Types
+import fr.mrsuricate.pokedex.domain.model.Type
 
 @Composable
 fun DetailPokemonTypeItem(
-    types: Types,
+    types: Type,
     language: Language
 ) {
     Box(
@@ -23,7 +23,7 @@ fun DetailPokemonTypeItem(
                 RoundedCornerShape(16.dp)
             )
     ) {
-        types.names.find { it?.language?.name == language.name }?.name?.let {
+        types.names.find { it.language == language.name }?.name?.let {
             Text(
                 text = it,
                 modifier = Modifier

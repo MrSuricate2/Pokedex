@@ -1,11 +1,12 @@
 package fr.mrsuricate.pokedex.ui.viewModel
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fr.mrsuricate.pokedex.data.api.PokemonApi
-import fr.mrsuricate.pokedex.data.api.model.PokemonJsonModel
 import fr.mrsuricate.pokedex.data.api.model.PokemonResponse
+import fr.mrsuricate.pokedex.domain.model.Pokemon
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +16,7 @@ class HomeViewModel : ViewModel() {
 
     data class UiState(
         var pokemonResponse: PokemonResponse = PokemonResponse(),
-        var pokemons: List<PokemonJsonModel?> = ArrayList<PokemonJsonModel>(),
+        var pokemons: List<Pokemon> = ArrayList(),
         var pokemonDisplay: Int = 0
     )
 
@@ -50,6 +51,7 @@ class HomeViewModel : ViewModel() {
                 pokemonResponse.results.forEach {
                     getPokemonList(name = it.name)
                 }
+                Log.d("HomeViewModel", pokemonData.value.pokemons.size.toString())
             }
         })
     }
@@ -60,14 +62,20 @@ class HomeViewModel : ViewModel() {
             response.body()?.let { pokemon ->
                 if (pokemon.isDefault) {
                     updateState {
-                        val updatedPokemons = pokemons
-                            .sortedBy { it?.id }
-                        copy(pokemons = updatedPokemons)
+                        // Ajoute le nouveau Pokémon à la liste existante
+                        val updatedPokemons =
+                            pokemons.toMutableList().apply { add(pokemon.toDomain()) }
+                        copy(pokemons = updatedPokemons.sortedBy { it.id })
                     }
+                    Log.d(
+                        "HomeViewModel",
+                        "Taille de la liste de Pokémon : ${pokemonData.value.pokemons.size}"
+                    )
                 }
             }
         })
     }
+
 
     fun addPokemonToList() {
         viewModelScope.launch {

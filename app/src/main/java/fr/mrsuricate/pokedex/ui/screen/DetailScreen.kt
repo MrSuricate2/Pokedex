@@ -39,7 +39,6 @@ fun DetailScreen(
 ) {
 
     val pokemon = detailViewModel.pokemon
-    val types = detailViewModel.types
     val lang: Language =
         settingViewModel.selectedLanguage.value ?: Language()
 
@@ -81,9 +80,9 @@ fun DetailScreen(
                 }
             }
             DetailPokemonName(
-                pokemon.getSpecies().names.find { it.language == lang.name }?.name ?: ""
+                pokemon.names.find { it.language == lang.name }?.name ?: ""
             )
-            DetailPokemonType(types, lang)
+            DetailPokemonType(pokemon.types, lang)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -109,7 +108,7 @@ private fun DetailPreview() {
             PokemonJsonModel(
                 id = 1,
                 name = "test"
-            )
+            ).toDomain()
         )
         DetailScreen(detailViewModel = detailViewModel, settingViewModel = settingViewModel) {
 

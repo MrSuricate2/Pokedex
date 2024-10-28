@@ -1,7 +1,6 @@
 package fr.mrsuricate.pokedex.data.api.model
 
 import com.google.gson.annotations.SerializedName
-import fr.mrsuricate.pokedex.domain.model.Species
 
 data class PokemonSpecies(
     @SerializedName("id") val id: Int = 0,
@@ -25,33 +24,18 @@ data class PokemonSpecies(
     @SerializedName("evolution_chain") val evolutionChain: APIResource? = null,
     @SerializedName("habitat") val habitat: NamedApiResource? = null,
     @SerializedName("generation") val generation: NamedApiResource? = null,
-    @SerializedName("names") val names: List<Name?> = listOf(),
+    @SerializedName("names") val names: List<Name> = listOf(),
     @SerializedName("pal_park_encounters") val palParkEncounters: List<PalParkEncounterArea?>? = null,
     @SerializedName("flavor_text_entries") val flavorTextEntries: List<FlavorText?>? = null,
     @SerializedName("form_descriptions") val formDescriptions: List<Description?>? = null,
     @SerializedName("genera") val genera: List<Genus?>? = null,
     @SerializedName("varieties") val varieties: List<PokemonSpeciesVariety?>? = null,
 ) {
-    fun toDomain(): Species {
+    fun toDomain(): List<fr.mrsuricate.pokedex.domain.model.Name> {
         val names: MutableList<fr.mrsuricate.pokedex.domain.model.Name> = mutableListOf()
         this.names.forEach { name ->
-            name?.language?.name?.let { language ->
-                name.name.let { it ->
-                    fr.mrsuricate.pokedex.domain.model.Name(
-                        language = language,
-                        name = it
-                    )
-                }
-            }?.let {
-                names.add(
-                    it
-                )
-            }
+            names.add(name.toDomain())
         }
-        return Species(
-            id = this.id,
-            name = this.name,
-            names = names
-        )
+        return names
     }
 }

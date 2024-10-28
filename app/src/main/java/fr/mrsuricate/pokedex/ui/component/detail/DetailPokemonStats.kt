@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import fr.mrsuricate.pokedex.data.api.model.PokemonJsonModel
+import fr.mrsuricate.pokedex.domain.model.Pokemon
 import fr.mrsuricate.pokedex.ui.theme.atk
 import fr.mrsuricate.pokedex.ui.theme.def
 import fr.mrsuricate.pokedex.ui.theme.exp
@@ -18,7 +18,7 @@ import fr.mrsuricate.pokedex.ui.theme.hp
 import fr.mrsuricate.pokedex.ui.theme.spd
 
 @Composable
-fun DetailPokemonStats(pokemon: PokemonJsonModel) {
+fun DetailPokemonStats(pokemon: Pokemon) {
     Text(
         modifier = Modifier
             .padding(top = 32.dp),
@@ -33,7 +33,7 @@ fun DetailPokemonStats(pokemon: PokemonJsonModel) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         pokemon.stats.forEach { pokemonStat ->
-            if (pokemonStat.stat.name == "hp") {
+            if (pokemonStat.name == "hp") {
                 DetailPokemonProgressBarStats(
                     statsType = "HP",
                     stats = pokemonStat.baseStat,
@@ -41,7 +41,7 @@ fun DetailPokemonStats(pokemon: PokemonJsonModel) {
                     color = hp
                 )
             }
-            if (pokemonStat.stat.name == "attack") {
+            if (pokemonStat.name == "attack") {
                 DetailPokemonProgressBarStats(
                     statsType = "ATK",
                     stats = pokemonStat.baseStat,
@@ -49,7 +49,7 @@ fun DetailPokemonStats(pokemon: PokemonJsonModel) {
                     color = atk
                 )
             }
-            if (pokemonStat.stat.name == "defense") {
+            if (pokemonStat.name == "defense") {
                 DetailPokemonProgressBarStats(
                     statsType = "DEF",
                     stats = pokemonStat.baseStat,
@@ -57,7 +57,7 @@ fun DetailPokemonStats(pokemon: PokemonJsonModel) {
                     color = def
                 )
             }
-            if (pokemonStat.stat.name == "speed") {
+            if (pokemonStat.name == "speed") {
                 DetailPokemonProgressBarStats(
                     statsType = "SPD",
                     stats = pokemonStat.baseStat,

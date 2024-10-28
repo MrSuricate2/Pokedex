@@ -32,7 +32,7 @@ fun PokemonListCard(
         modifier = modifier.padding(top = 8.dp)
     ) {
         items(count = agentsData.pokemons.size) { index ->
-            agentsData.pokemons[index]?.let { pokemon ->
+            agentsData.pokemons[index].let { pokemon ->
                 PokemonCard(
                     detailViewModel = detailViewModel,
                     pokemon = pokemon,

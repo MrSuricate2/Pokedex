@@ -2,10 +2,11 @@ package fr.mrsuricate.pokedex.domain.model
 
 class Pokemon(
     val id: Int,
-    val name: String,
+    val names: List<Name>,
     val baseExperience: Int,
     val height: Int,
-    val isDefault: Boolean,
     val weight: Int,
-    val species: Species
+    val image: String,
+    val types: List<Type>,
+    val stats: List<Stats>
 )

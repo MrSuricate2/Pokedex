@@ -9,10 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import fr.mrsuricate.pokedex.data.api.model.PokemonJsonModel
+import fr.mrsuricate.pokedex.domain.model.Pokemon
 
 @Composable
-fun DetailPokemonHeight(pokemon: PokemonJsonModel) {
+fun DetailPokemonHeight(pokemon: Pokemon) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
