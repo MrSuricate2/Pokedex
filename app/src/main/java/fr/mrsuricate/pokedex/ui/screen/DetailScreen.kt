@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.mrsuricate.pokedex.data.api.model.Language
-import fr.mrsuricate.pokedex.data.api.model.PokemonJsonModel
 import fr.mrsuricate.pokedex.ui.component.DisplayPokemon
 import fr.mrsuricate.pokedex.ui.component.detail.DetailPokemonHeight
 import fr.mrsuricate.pokedex.ui.component.detail.DetailPokemonName
@@ -30,17 +29,16 @@ import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 import fr.mrsuricate.pokedex.ui.theme.colorPrimary
 import fr.mrsuricate.pokedex.ui.viewModel.DetailViewModel
 import fr.mrsuricate.pokedex.ui.viewModel.SettingViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DetailScreen(
-    detailViewModel: DetailViewModel,
-    settingViewModel: SettingViewModel,
     onGoBack: () -> Unit,
 ) {
-
+    val settingViewModel: SettingViewModel = koinViewModel()
+    val detailViewModel: DetailViewModel = koinViewModel()
     val pokemon = detailViewModel.pokemon
-    val lang: Language =
-        settingViewModel.selectedLanguage.value ?: Language()
+    val lang: Language = settingViewModel.selectedLanguage.value ?: Language()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -102,15 +100,7 @@ fun DetailScreen(
 @Composable
 private fun DetailPreview() {
     PokedexTheme(darkTheme = true) {
-        val detailViewModel = DetailViewModel()
-        val settingViewModel = SettingViewModel()
-        detailViewModel.setPokemon(
-            PokemonJsonModel(
-                id = 1,
-                name = "test"
-            ).toDomain()
-        )
-        DetailScreen(detailViewModel = detailViewModel, settingViewModel = settingViewModel) {
+        DetailScreen {
 
         }
     }

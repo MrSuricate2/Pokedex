@@ -9,14 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import fr.mrsuricate.pokedex.ui.component.setting.SettingLanguageItem
-import fr.mrsuricate.pokedex.ui.component.setting.SettingsItem
 import fr.mrsuricate.pokedex.ui.component.topBar.SettingAppBar
 import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 import fr.mrsuricate.pokedex.ui.viewModel.SettingViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun SettingLanguageScreen(settingViewModel: SettingViewModel, onGoBack: () -> Unit) {
+fun SettingLanguageScreen(onGoBack: () -> Unit) {
+    val settingViewModel: SettingViewModel = koinViewModel()
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -55,21 +56,7 @@ private fun SettingScreenPreview() {
     PokedexTheme(
         darkTheme = true
     ) {
-        SettingLanguageScreen(
-            settingViewModel = SettingViewModel()
-        ) {
-
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun SettingsItemPreview() {
-    PokedexTheme(
-        darkTheme = true
-    ) {
-        SettingsItem("Langue") {
+        SettingLanguageScreen {
 
         }
     }

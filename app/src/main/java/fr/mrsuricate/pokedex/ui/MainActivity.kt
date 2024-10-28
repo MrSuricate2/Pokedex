@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -19,9 +18,6 @@ import fr.mrsuricate.pokedex.ui.screen.LandingScreen
 import fr.mrsuricate.pokedex.ui.screen.SettingLanguageScreen
 import fr.mrsuricate.pokedex.ui.screen.SettingScreen
 import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
-import fr.mrsuricate.pokedex.ui.viewModel.DetailViewModel
-import fr.mrsuricate.pokedex.ui.viewModel.HomeViewModel
-import fr.mrsuricate.pokedex.ui.viewModel.SettingViewModel
 
 // Main application activity
 class MainActivity : ComponentActivity() {
@@ -41,15 +37,6 @@ class MainActivity : ComponentActivity() {
                 // Creates and remembers a NavController for handling screen navigation
                 val navController = rememberNavController()
 
-                // Creates an instance of HomeViewModel
-                val homeViewModel: HomeViewModel = viewModel()
-
-                // Creates an instance of SettingsViewModel
-                val settingViewModel: SettingViewModel = viewModel()
-
-                // Creates an instance of DetailViewModel
-                val detailViewModel: DetailViewModel = viewModel()
-
                 // Defines the navigation structure with NavHost
                 NavHost(
                     navController = navController,
@@ -67,9 +54,6 @@ class MainActivity : ComponentActivity() {
                     // Defines navigation to the home page
                     composable(route = Home.route) {
                         HomeScreen(
-                            homeViewModel = homeViewModel,
-                            detailViewModel = detailViewModel,
-                            settingViewModel = settingViewModel,
                             navController = navController
                         )
                     }
@@ -78,10 +62,7 @@ class MainActivity : ComponentActivity() {
                     composable(
                         route = Detail.route
                     ) {
-                        DetailScreen(
-                            settingViewModel = settingViewModel,
-                            detailViewModel = detailViewModel
-                        ) {
+                        DetailScreen {
                             navController.popBackStack() // Navigate back in the stack
                         }
                     }
@@ -92,7 +73,6 @@ class MainActivity : ComponentActivity() {
                         route = Setting.route
                     ) {
                         SettingScreen(
-                            settingViewModel = settingViewModel,
                             navController = navController
                         ) {
                             navController.popBackStack() // Navigate back in the stack
@@ -103,9 +83,7 @@ class MainActivity : ComponentActivity() {
                     composable(
                         route = SettingLanguage.route
                     ) {
-                        SettingLanguageScreen(
-                            settingViewModel = settingViewModel,
-                        ) {
+                        SettingLanguageScreen {
                             navController.popBackStack() // Navigate back in the stack
                         }
                     }

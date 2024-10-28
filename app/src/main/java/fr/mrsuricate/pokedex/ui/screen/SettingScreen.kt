@@ -14,14 +14,15 @@ import fr.mrsuricate.pokedex.ui.component.setting.SettingsItem
 import fr.mrsuricate.pokedex.ui.component.topBar.SettingAppBar
 import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 import fr.mrsuricate.pokedex.ui.viewModel.SettingViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun SettingScreen(
-    settingViewModel: SettingViewModel,
     navController: NavController,
     onGoBack: () -> Unit
 ) {
+    val settingViewModel: SettingViewModel = koinViewModel()
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -53,7 +54,6 @@ private fun SettingScreenPreview() {
         darkTheme = true
     ) {
         SettingScreen(
-            settingViewModel = SettingViewModel(),
             navController = navController
         ) {
 

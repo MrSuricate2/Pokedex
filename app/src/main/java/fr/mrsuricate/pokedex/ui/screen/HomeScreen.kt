@@ -12,17 +12,17 @@ import fr.mrsuricate.pokedex.ui.component.topBar.HomeAppBar
 import fr.mrsuricate.pokedex.ui.viewModel.DetailViewModel
 import fr.mrsuricate.pokedex.ui.viewModel.HomeViewModel
 import fr.mrsuricate.pokedex.ui.viewModel.SettingViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
-    homeViewModel: HomeViewModel,
-    detailViewModel: DetailViewModel,
     navController: NavHostController,
-    settingViewModel: SettingViewModel
 ) {
-
-    val lang: Language =
-        settingViewModel.selectedLanguage.value ?: Language()
+    // ViewModel singleton injection
+    val homeViewModel: HomeViewModel = koinViewModel()
+    val settingViewModel: SettingViewModel = koinViewModel()
+    val detailViewModel: DetailViewModel = koinViewModel()
+    val lang: Language = settingViewModel.selectedLanguage.value ?: Language()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
