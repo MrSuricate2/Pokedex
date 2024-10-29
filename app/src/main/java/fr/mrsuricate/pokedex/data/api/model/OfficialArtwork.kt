@@ -6,6 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class OfficialArtwork(
-    @SerializedName("front_default") var frontDefault: String? = null,
+    @SerializedName("front_default") var frontDefault: String = String(),
     @SerializedName("front_shiny") var frontShiny: String? = null
 ) : Parcelable

@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName
 import fr.mrsuricate.pokedex.data.api.PokemonApi
 import fr.mrsuricate.pokedex.domain.model.Name
 import fr.mrsuricate.pokedex.domain.model.Pokemon
-import fr.mrsuricate.pokedex.domain.model.Stats
 import fr.mrsuricate.pokedex.domain.model.Type
 
 data class PokemonJsonModel(
@@ -39,7 +38,7 @@ data class PokemonJsonModel(
             weight = this.weight,
             image = this.getSprites(),
             types = this.getTypes(),
-            stats = this.getStats()
+            stats = this.stats.map { it.toDomain() }
         )
     }
 
@@ -53,7 +52,8 @@ data class PokemonJsonModel(
     }
 
     private fun getSprites(): String {
-        return this.sprites.other.dreamWorld.frontDefault ?: ""
+        return this.sprites.other.dreamWorld.frontDefault
+            ?: this.sprites.other.officialArtwork.frontDefault
     }
 
     private fun getTypes(): List<Type> {
@@ -67,13 +67,5 @@ data class PokemonJsonModel(
             })
         }
         return listTypes
-    }
-
-    private fun getStats(): List<Stats> {
-        val listStats: MutableList<Stats> = mutableListOf()
-        this.stats.forEach { stat ->
-            listStats.add(stat.toDomain())
-        }
-        return listStats
     }
 }

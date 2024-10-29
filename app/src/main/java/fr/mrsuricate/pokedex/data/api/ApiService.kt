@@ -6,6 +6,7 @@ import fr.mrsuricate.pokedex.data.api.model.PokemonResponse
 import fr.mrsuricate.pokedex.data.api.model.PokemonSpecies
 import fr.mrsuricate.pokedex.data.api.model.Types
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -13,15 +14,15 @@ import retrofit2.http.Query
 interface PokemonApiService {
 
     @GET("pokemon")
-    fun getPokemonList(
-        @Query("limit") limit: Int = 40,
+    suspend fun getPokemonList(
+        @Query("limit") limit: Int = 100,
         @Query("offset") offset: Int = 0,
-    ): Call<PokemonResponse>
+    ): Response<PokemonResponse>
 
     @GET("pokemon/{name}")
-    fun getPokemonInfo(
+    suspend fun getPokemonInfo(
         @Path("name") name: String
-    ): Call<PokemonJsonModel>
+    ): Response<PokemonJsonModel>
 
     @GET("pokemon-species/{id}")
     fun getSpecies(

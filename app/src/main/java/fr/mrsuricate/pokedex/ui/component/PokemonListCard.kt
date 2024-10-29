@@ -23,7 +23,7 @@ fun PokemonListCard(
     navController: NavHostController,
     lang: Language
 ) {
-    val agentsData by homeViewModel.pokemonData.collectAsState()
+    val pokemonList by homeViewModel.pokemonFlow.collectAsState()
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -31,8 +31,8 @@ fun PokemonListCard(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier.padding(top = 8.dp)
     ) {
-        items(count = agentsData.pokemons.size) { index ->
-            agentsData.pokemons[index].let { pokemon ->
+        items(count = pokemonList.size) { index ->
+            pokemonList[index].let { pokemon ->
                 PokemonCard(
                     detailViewModel = detailViewModel,
                     pokemon = pokemon,
@@ -40,13 +40,13 @@ fun PokemonListCard(
                     navController = navController
                 )
 
-                if (index == agentsData.pokemonDisplay - 30) {
-                    LaunchedEffect(key1 = index) {
+                if (index == (pokemonList.size.minus(30))) {
+                    // On lance un effet pour charger plus de Pokémon
+                    LaunchedEffect(Unit) {
                         homeViewModel.addPokemonToList()
                     }
                 }
             }
         }
-
     }
 }
