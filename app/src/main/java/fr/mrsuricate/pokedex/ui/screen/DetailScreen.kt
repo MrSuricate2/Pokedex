@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import fr.mrsuricate.pokedex.data.api.model.Language
 import fr.mrsuricate.pokedex.ui.component.DisplayPokemon
 import fr.mrsuricate.pokedex.ui.component.detail.DetailPokemonHeight
 import fr.mrsuricate.pokedex.ui.component.detail.DetailPokemonName
@@ -38,7 +37,7 @@ fun DetailScreen(
     val settingViewModel: SettingViewModel = koinViewModel()
     val detailViewModel: DetailViewModel = koinViewModel()
     val pokemon = detailViewModel.pokemon
-    val lang: Language = settingViewModel.selectedLanguage.value ?: Language()
+    val lang: String = settingViewModel.selectedLanguage.value ?: "fr"
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -78,7 +77,7 @@ fun DetailScreen(
                 }
             }
             DetailPokemonName(
-                pokemon.names.find { it.language == lang.name }?.name ?: ""
+                pokemon.names.find { it.language == lang }?.name ?: ""
             )
             DetailPokemonType(pokemon.types, lang)
             Row(

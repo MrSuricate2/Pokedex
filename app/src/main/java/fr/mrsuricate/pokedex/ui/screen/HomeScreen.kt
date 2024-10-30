@@ -6,7 +6,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import fr.mrsuricate.pokedex.data.api.model.Language
 import fr.mrsuricate.pokedex.ui.component.PokemonListCard
 import fr.mrsuricate.pokedex.ui.component.topBar.HomeAppBar
 import fr.mrsuricate.pokedex.ui.viewModel.DetailViewModel
@@ -22,7 +21,7 @@ fun HomeScreen(
     val homeViewModel: HomeViewModel = koinViewModel()
     val settingViewModel: SettingViewModel = koinViewModel()
     val detailViewModel: DetailViewModel = koinViewModel()
-    val lang: Language = settingViewModel.selectedLanguage.value ?: Language()
+    val lang: String = settingViewModel.selectedLanguage.value ?: "fr"
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),

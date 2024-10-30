@@ -29,21 +29,19 @@ fun SettingLanguageScreen(onGoBack: () -> Unit) {
         LazyColumn(
             modifier = Modifier.padding(innerPadding)
         ) {
-            items(settingViewModel.language.size) { index ->
-                settingViewModel.language.values.elementAt(index).names.find {
-                    it.language.name == settingViewModel.selectedLanguage.value?.name
-                }?.let {
-                    SettingLanguageItem(
-                        text = it.name,
-                        onClick = {
-                            settingViewModel.changeSelectedLangue(
-                                settingViewModel.language.values.elementAt(
-                                    index
-                                )
-                            )
-                            onGoBack()
-                        }
-                    )
+            items(settingViewModel.languageFlow.value.size) {
+                settingViewModel.languageFlow.value.forEach { language ->
+                    language.names.find { name ->
+                        name.language == settingViewModel.selectedLanguage.value
+                    }?.let {
+                        SettingLanguageItem(
+                            text = it.name,
+                            onClick = {
+                                settingViewModel.changeSelectedLangue(language.language)
+                                onGoBack()
+                            }
+                        )
+                    }
                 }
             }
         }

@@ -1,29 +1,28 @@
 package fr.mrsuricate.pokedex.ui.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import fr.mrsuricate.pokedex.data.api.PokemonApi
-import fr.mrsuricate.pokedex.data.api.model.Language
+import fr.mrsuricate.pokedex.domain.model.Language
+import fr.mrsuricate.pokedex.domain.repository.LanguageRepository
 import fr.mrsuricate.pokedex.ui.navigation.SettingLanguage
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class SettingViewModel : ViewModel() {
+class SettingViewModel(private val repository: LanguageRepository) : ViewModel() {
 
     private var _settings: MutableMap<String, String> = mutableMapOf()
     val settings: Map<String, String> = _settings
 
-    private var _language: MutableMap<String, Language> =
-        mutableMapOf()
-    val language: Map<String, Language> = _language
+    private var _language: MutableList<Language> = mutableListOf()
+    private val _languageFlow = MutableStateFlow<List<Language>>(emptyList())
+    val languageFlow: StateFlow<List<Language>> = _languageFlow
 
-    private val _selectedLanguage: MutableLiveData<Language> =
-        MutableLiveData(
-            Language()
-        )
-    val selectedLanguage: LiveData<Language> =
-        _selectedLanguage
+    private val _selectedLanguage: MutableLiveData<String> = MutableLiveData("fr")
+    val selectedLanguage: LiveData<String> = _selectedLanguage
 
     init {
         _settings.put("Langue", SettingLanguage.route)
@@ -36,26 +35,20 @@ class SettingViewModel : ViewModel() {
         }
     }
 
-    private fun getLanguageResult() {
-        _language.clear()
-        val listResult = PokemonApi.apiService.getLanguages()
-        PokemonApi.executeApiCall(listResult, onSuccess = { response ->
-            response.body()?.let { languageResponse ->
-                languageResponse.results.forEach { language ->
-                    val listLanguage = PokemonApi.apiService.getLanguage(name = language.name)
-                    PokemonApi.executeApiCall(listLanguage, onSuccess = { response1 ->
-                        response1.body()?.names?.forEach { name ->
-                            if (name.language.name == selectedLanguage.value?.name) {
-                                response1.body()?.let { _language.put(it.name, response1.body()!!) }
-                            }
-                        }
-                    })
-                }
+    private suspend fun getLanguageResult() {
+        try {
+            val languageList = repository.getLanguageList()
+            Log.d("SettingViewModel", languageList.size.toString())
+            if (languageList.isNotEmpty()) {
+                _language.addAll(languageList)
+                _languageFlow.value = _language.toList()
             }
-        })
+        } catch (_: Exception) {
+
+        }
     }
 
-    fun changeSelectedLangue(lang: Language) {
+    fun changeSelectedLangue(lang: String) {
         _selectedLanguage.value = lang
     }
 }

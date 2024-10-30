@@ -1,6 +1,8 @@
 package fr.mrsuricate.pokedex.ui.module
 
 import fr.mrsuricate.pokedex.data.api.PokemonApiService
+import fr.mrsuricate.pokedex.domain.repository.LanguageRepository
+import fr.mrsuricate.pokedex.domain.repository.LanguageRepositoryImpl
 import fr.mrsuricate.pokedex.domain.repository.PokemonRepository
 import fr.mrsuricate.pokedex.domain.repository.PokemonRepositoryImpl
 import fr.mrsuricate.pokedex.ui.viewModel.DetailViewModel
@@ -12,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 val appModule = module {
     single { HomeViewModel(get()) }
-    single { SettingViewModel() }
+    single { SettingViewModel(get()) }
     single { DetailViewModel() }
     single {
 //        val trustManager = object : X509TrustManager {
@@ -39,4 +41,5 @@ val appModule = module {
         get<Retrofit>().create(PokemonApiService::class.java)
     }
     single<PokemonRepository> { PokemonRepositoryImpl(get()) }
+    single<LanguageRepository> { LanguageRepositoryImpl(get()) }
 }

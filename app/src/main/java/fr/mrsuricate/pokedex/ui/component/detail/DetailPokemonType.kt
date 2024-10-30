@@ -8,13 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import fr.mrsuricate.pokedex.data.api.model.Language
 import fr.mrsuricate.pokedex.domain.model.Type
 
 @Composable
 fun DetailPokemonType(
     types: List<Type>,
-    lang: Language
+    lang: String
 ) {
     Row(
         modifier = Modifier

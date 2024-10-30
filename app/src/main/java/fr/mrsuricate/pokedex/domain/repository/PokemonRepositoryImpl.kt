@@ -1,6 +1,5 @@
 package fr.mrsuricate.pokedex.domain.repository
 
-import android.util.Log
 import fr.mrsuricate.pokedex.data.api.PokemonApiService
 import fr.mrsuricate.pokedex.domain.model.Pokemon
 import kotlinx.coroutines.async
@@ -13,26 +12,25 @@ class PokemonRepositoryImpl(private val apiService: PokemonApiService) : Pokemon
             val response = apiService.getPokemonList(offset = offset)
             if (response.isSuccessful) {
                 val pokemonResults = response.body()?.results ?: emptyList()
-                Log.d("PokemonRepositoryImpl", pokemonResults.size.toString())
-                // Charger les détails en parallèle et filtrer les `null`
+                // Load details in parallel and filter out `nulls
                 coroutineScope {
                     pokemonResults.map { pokemonSummary ->
                         async {
                             val pokemonResponse = apiService.getPokemonInfo(pokemonSummary.name)
                             if (pokemonResponse.body()?.isDefault == true) {
                                 pokemonResponse.body()
-                                    ?.toDomain() // Renvoie `null` si l'appel échoue ou le corps est vide
+                                    ?.toDomain() // Returns `null` if the call fails or the body is empty
                             } else {
                                 null
                             }
                         }
-                    }.mapNotNull { it.await() } // Filtre les valeurs `null` résultantes
+                    }.mapNotNull { it.await() } // Filters out the resulting `null` values
                 }
             } else {
-                emptyList() // Retourne une liste vide en cas d'erreur réseau
+                emptyList() // Returns an empty list in the event of a network error
             }
         } catch (e: Exception) {
-            emptyList() // Gestion d'exception réseau
+            emptyList() // Network exception management
         }
     }
 

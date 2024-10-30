@@ -11,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import fr.mrsuricate.pokedex.data.api.model.Language
 import fr.mrsuricate.pokedex.ui.viewModel.DetailViewModel
 import fr.mrsuricate.pokedex.ui.viewModel.HomeViewModel
 
@@ -21,7 +20,7 @@ fun PokemonListCard(
     homeViewModel: HomeViewModel,
     detailViewModel: DetailViewModel,
     navController: NavHostController,
-    lang: Language
+    lang: String
 ) {
     val pokemonList by homeViewModel.pokemonFlow.collectAsState()
 

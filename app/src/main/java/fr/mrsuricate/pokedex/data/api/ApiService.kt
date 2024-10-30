@@ -35,12 +35,12 @@ interface PokemonApiService {
     ): Call<Types>
 
     @GET("language")
-    fun getLanguages(
-    ): Call<PokemonResponse>
+    suspend fun getLanguages(
+    ): Response<PokemonResponse>
 
     @GET("language/{name}")
-    fun getLanguage(
+    suspend fun getLanguage(
         @Path("name") name: String
-    ): Call<Language>
+    ): Response<Language>
 
 }
