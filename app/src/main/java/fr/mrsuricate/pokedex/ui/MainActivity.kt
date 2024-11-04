@@ -9,12 +9,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import fr.mrsuricate.pokedex.ui.navigation.Detail
 import fr.mrsuricate.pokedex.ui.navigation.Home
-import fr.mrsuricate.pokedex.ui.navigation.Landing
 import fr.mrsuricate.pokedex.ui.navigation.Setting
 import fr.mrsuricate.pokedex.ui.navigation.SettingLanguage
 import fr.mrsuricate.pokedex.ui.screen.DetailScreen
 import fr.mrsuricate.pokedex.ui.screen.HomeScreen
-import fr.mrsuricate.pokedex.ui.screen.LandingScreen
 import fr.mrsuricate.pokedex.ui.screen.SettingLanguageScreen
 import fr.mrsuricate.pokedex.ui.screen.SettingScreen
 import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
@@ -40,16 +38,8 @@ class MainActivity : ComponentActivity() {
                 // Defines the navigation structure with NavHost
                 NavHost(
                     navController = navController,
-                    startDestination = Landing.route // Sets the starting screen to Landing
+                    startDestination = Home.route // Sets the starting screen to Landing
                 ) {
-
-                    // Defines navigation to the landing screen
-                    composable(route = Landing.route) {
-                        // Displays the LandingScreen component and navigates to the Home screen after a timeout
-                        LandingScreen(onTimeout = {
-                            navController.navigate(Home.route) // Navigate to the Home screen
-                        })
-                    }
 
                     // Defines navigation to the home page
                     composable(route = Home.route) {
