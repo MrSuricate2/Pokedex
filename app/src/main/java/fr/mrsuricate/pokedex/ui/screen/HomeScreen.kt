@@ -8,8 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import fr.mrsuricate.pokedex.ui.component.PokemonListCard
 import fr.mrsuricate.pokedex.ui.component.topBar.HomeAppBar
-import fr.mrsuricate.pokedex.ui.viewModel.DetailViewModel
-import fr.mrsuricate.pokedex.ui.viewModel.HomeViewModel
 import fr.mrsuricate.pokedex.ui.viewModel.SettingViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -18,9 +16,7 @@ fun HomeScreen(
     navController: NavHostController,
 ) {
     // ViewModel singleton injection
-    val homeViewModel: HomeViewModel = koinViewModel()
     val settingViewModel: SettingViewModel = koinViewModel()
-    val detailViewModel: DetailViewModel = koinViewModel()
     val lang: String = settingViewModel.selectedLanguage.value ?: "fr"
 
     Scaffold(
@@ -31,8 +27,6 @@ fun HomeScreen(
     ) { innerPadding ->
         PokemonListCard(
             modifier = Modifier.padding(innerPadding),
-            homeViewModel = homeViewModel,
-            detailViewModel = detailViewModel,
             lang = lang,
             navController = navController
         )

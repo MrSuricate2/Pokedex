@@ -17,15 +17,17 @@ import androidx.navigation.NavHostController
 import fr.mrsuricate.pokedex.domain.model.Pokemon
 import fr.mrsuricate.pokedex.ui.navigation.Detail
 import fr.mrsuricate.pokedex.ui.viewModel.DetailViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun PokemonCard(
-    detailViewModel: DetailViewModel,
     pokemon: Pokemon,
     modifier: Modifier = Modifier,
     navController: NavHostController,
     lang: String
 ) {
+    val detailViewModel: DetailViewModel = koinViewModel()
+
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,

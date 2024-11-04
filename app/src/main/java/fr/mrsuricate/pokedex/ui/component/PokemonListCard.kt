@@ -11,17 +11,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import fr.mrsuricate.pokedex.ui.viewModel.DetailViewModel
 import fr.mrsuricate.pokedex.ui.viewModel.HomeViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun PokemonListCard(
     modifier: Modifier = Modifier,
-    homeViewModel: HomeViewModel,
-    detailViewModel: DetailViewModel,
     navController: NavHostController,
     lang: String
 ) {
+    // ViewModel singleton injection
+    val homeViewModel: HomeViewModel = koinViewModel()
+
     val pokemonList by homeViewModel.pokemonFlow.collectAsState()
 
     LazyVerticalGrid(
@@ -33,7 +34,6 @@ fun PokemonListCard(
         items(count = pokemonList.size) { index ->
             pokemonList[index].let { pokemon ->
                 PokemonCard(
-                    detailViewModel = detailViewModel,
                     pokemon = pokemon,
                     lang = lang,
                     navController = navController
