@@ -1,16 +1,12 @@
 package fr.mrsuricate.pokedex.data.api
 
-import android.util.Log
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object PokemonApi {
     private const val BASE_URL = "https://pokeapi.co/api/v2/"
 
-    //todo barre de recherhe
+    //todo barre de recherche
 //
 //    val trustManager = object : X509TrustManager {
 //        override fun getAcceptedIssuers(): Array<X509Certificate>? = arrayOf()
@@ -34,30 +30,5 @@ object PokemonApi {
 
     val apiService: PokemonApiService by lazy {
         retrofit.create(PokemonApiService::class.java)
-    }
-
-    // Centralized function for API call to reduce redundancy
-    fun <T> executeApiCall(
-        call: Call<T>,
-        onSuccess: (Response<T>) -> Unit,
-        onFailure: (Throwable) -> Unit = {
-            Log.e(
-                "RetrofitClient",
-                "API Call Failed",
-                it
-            )
-        }
-    ) {
-        call.enqueue(object : Callback<T> {
-            override fun onResponse(call: Call<T>, response: Response<T>) {
-                if (response.isSuccessful) {
-                    onSuccess(response)
-                }
-            }
-
-            override fun onFailure(call: Call<T>, t: Throwable) {
-                onFailure(t)
-            }
-        })
     }
 }

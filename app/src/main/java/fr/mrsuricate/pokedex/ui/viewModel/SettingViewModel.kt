@@ -1,6 +1,5 @@
 package fr.mrsuricate.pokedex.ui.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,7 +37,6 @@ class SettingViewModel(private val repository: LanguageRepository) : ViewModel()
     private suspend fun getLanguageResult() {
         try {
             val languageList = repository.getLanguageList()
-            Log.d("SettingViewModel", languageList.size.toString())
             if (languageList.isNotEmpty()) {
                 _language.addAll(languageList)
                 _languageFlow.value = _language.toList()

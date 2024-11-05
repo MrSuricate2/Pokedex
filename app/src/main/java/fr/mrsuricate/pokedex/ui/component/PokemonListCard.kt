@@ -27,9 +27,9 @@ fun PokemonListCard(
 
     val pokemonList by homeViewModel.pokemonFlow.collectAsState()
 
-    // Récupère la configuration actuelle
+    // Retrieves current configuration
     val configuration = LocalConfiguration.current
-    // Définit le nombre de colonnes en fonction de l'orientation
+    // Sets the number of columns based on orientation
     val columns = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
         3
     } else {
@@ -51,7 +51,7 @@ fun PokemonListCard(
                 )
 
                 if (index == (pokemonList.size.minus(30))) {
-                    // On lance un effet pour charger plus de Pokémon
+                    // Launch an effect to load more Pokémon
                     LaunchedEffect(Unit) {
                         homeViewModel.addPokemonToList()
                     }

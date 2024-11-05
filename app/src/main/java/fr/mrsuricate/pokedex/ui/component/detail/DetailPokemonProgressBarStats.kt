@@ -27,8 +27,7 @@ fun DetailPokemonProgressBarStats(
     statsType: String,
     stats: Int,
     maxStats: Int,
-    color: Color,
-    darkMode: Boolean = false
+    color: Color
 ) {
     Row(
         modifier = Modifier

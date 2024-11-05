@@ -1,6 +1,5 @@
 package fr.mrsuricate.pokedex.ui.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -47,10 +46,6 @@ class HomeViewModel(private val repository: PokemonRepository) : ViewModel() {
                 _pokemonList.addAll(pokemonList)
                 // Updates StateFlow
                 _pokemonFlow.value = _pokemonList.toList()
-                Log.d(
-                    "HomeViewModel",
-                    "Nouvelle liste de Pokémon chargée, taille actuelle: ${_pokemonList.size}"
-                )
             }
         } catch (_: Exception) {
 
@@ -63,10 +58,6 @@ class HomeViewModel(private val repository: PokemonRepository) : ViewModel() {
 //            val urlString = pokemonData.value.pokemonResponse.next ?: return@launch
 //            val uri = Uri.parse(urlString)
 //            val offset = uri.getQueryParameter("offset")?.toIntOrNull() ?: 0
-            Log.d(
-                "HomeViewModel",
-                "salut je demande plus de pokemon offset de ${_pokemonList.size}"
-            )
             loadPokemonList(offset = _pokemonList.size)
         }
     }
