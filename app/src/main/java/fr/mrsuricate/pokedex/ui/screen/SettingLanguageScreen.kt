@@ -7,10 +7,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import fr.mrsuricate.pokedex.ui.component.setting.SettingLanguageItem
 import fr.mrsuricate.pokedex.ui.component.topBar.SettingAppBar
-import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 import fr.mrsuricate.pokedex.ui.viewModel.SettingViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -18,6 +16,9 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun SettingLanguageScreen(onGoBack: () -> Unit) {
     val settingViewModel: SettingViewModel = koinViewModel()
+    val languageList = settingViewModel.languageFlow.value
+    val selectedLanguage = settingViewModel.selectedLanguage.value
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -29,31 +30,24 @@ fun SettingLanguageScreen(onGoBack: () -> Unit) {
         LazyColumn(
             modifier = Modifier.padding(innerPadding)
         ) {
-            items(settingViewModel.languageFlow.value.size) { index ->
-                settingViewModel.languageFlow.value[index].names.find { name ->
-                    name.language == settingViewModel.selectedLanguage.value
-                }?.let {
-                    SettingLanguageItem(
-                        text = it.name,
-                        onClick = {
-                            settingViewModel.changeSelectedLangue(settingViewModel.languageFlow.value[index].language)
-                            onGoBack()
-                        }
-                    )
+            items(languageList.size) { index ->
+                val language = languageList[index]
+
+                if (language.official) {
+                    val displayName = language.names.find { it.language == selectedLanguage }
+                        ?: language.names.find { it.language == "fr" }
+
+                    displayName?.let {
+                        SettingLanguageItem(
+                            text = it.name,
+                            onClick = {
+                                settingViewModel.changeSelectedLangue(language.language)
+                                onGoBack()
+                            }
+                        )
+                    }
                 }
             }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun SettingScreenPreview() {
-    PokedexTheme(
-        darkTheme = true
-    ) {
-        SettingLanguageScreen {
-
         }
     }
 }

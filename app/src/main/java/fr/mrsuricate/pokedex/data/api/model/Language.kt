@@ -17,7 +17,8 @@ data class Language(
     fun toDomain(): Language {
         return Language(
             language = this.name,
-            names = this.names.map { it.toDomain() }
+            names = this.names.map { it.toDomain() },
+            official = this.official ?: false
         )
     }
 }

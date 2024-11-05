@@ -2,5 +2,6 @@ package fr.mrsuricate.pokedex.domain.model
 
 class Language(
     val language: String,
-    val names: List<Name>
+    val names: List<Name>,
+    val official: Boolean
 )
