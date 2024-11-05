@@ -1,6 +1,7 @@
 package fr.mrsuricate.pokedex.ui.component.detail
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -42,6 +43,16 @@ fun DetailPokemonProgressBarStats(statsType: String, stats: Int, maxStats: Int, 
                         bottomEnd = 30.dp
                     )
                 )
+                .border(
+                    width = 1.dp,
+                    color = Color.Black,
+                    shape = RoundedCornerShape(
+                        topStart = 30.dp,
+                        topEnd = 30.dp,
+                        bottomStart = 30.dp,
+                        bottomEnd = 30.dp
+                    )
+                )
         ) {
             Box(
                 modifier = Modifier
@@ -69,7 +80,10 @@ fun DetailPokemonProgressBarStats(statsType: String, stats: Int, maxStats: Int, 
     }
 }
 
-@Preview
+@Preview(
+    backgroundColor = 0xFFFFFFFF,
+    showBackground = true,
+)
 @Composable
 private fun DetailPokemonProgressBarStatsPreview() {
     PokedexTheme(darkTheme = true) {
