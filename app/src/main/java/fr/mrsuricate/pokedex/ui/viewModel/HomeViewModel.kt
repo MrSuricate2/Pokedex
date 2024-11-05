@@ -1,6 +1,8 @@
 package fr.mrsuricate.pokedex.ui.viewModel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fr.mrsuricate.pokedex.domain.model.Pokemon
@@ -17,6 +19,15 @@ class HomeViewModel(private val repository: PokemonRepository) : ViewModel() {
     // MutableStateFlow to display the list of Pokémon
     private val _pokemonFlow = MutableStateFlow<List<Pokemon>>(emptyList())
     val pokemonFlow: StateFlow<List<Pokemon>> = _pokemonFlow
+
+    // LiveData to control the visibility of the "LandingScreen"
+    private val _showHomeScreen: MutableLiveData<Boolean> = MutableLiveData(false)
+    val showHomeScreen: LiveData<Boolean> = _showHomeScreen
+
+
+    fun setShowHomeScreen(value: Boolean) {
+        _showHomeScreen.value = value
+    }
 
     init {
         retrieveAgentsData()

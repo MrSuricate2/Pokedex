@@ -1,5 +1,5 @@
 [versions]
-agp = "8.7.1"
+agp = "8.7.2"
 coil = "3.0.0-rc01"
 converterScalars = "2.11.0"
 converterGson = "2.11.0"
@@ -14,6 +14,7 @@ composeBom = "2024.10.00"
 navigationCompose = "2.8.3"
 retrofit = "2.11.0"
 koin-bom = "4.0.0"
+runtimeLivedata = "1.7.5"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +43,7 @@ koin-androidx-compose-navigation = { module = "io.insert-koin:koin-androidx-comp
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
 koin-core = { module = "io.insert-koin:koin-core" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
