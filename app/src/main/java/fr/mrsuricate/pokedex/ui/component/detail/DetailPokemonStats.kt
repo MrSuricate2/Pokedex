@@ -4,13 +4,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import fr.mrsuricate.pokedex.domain.model.Pokemon
+import fr.mrsuricate.pokedex.domain.model.Stats
+import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 import fr.mrsuricate.pokedex.ui.theme.atk
 import fr.mrsuricate.pokedex.ui.theme.def
 import fr.mrsuricate.pokedex.ui.theme.exp
@@ -18,10 +20,8 @@ import fr.mrsuricate.pokedex.ui.theme.hp
 import fr.mrsuricate.pokedex.ui.theme.spd
 
 @Composable
-fun DetailPokemonStats(pokemon: Pokemon) {
+fun DetailPokemonStats(stats: List<Stats>, baseExperience: Int) {
     Text(
-        modifier = Modifier
-            .padding(top = 32.dp),
         fontSize = 24.sp,
         text = "Stats"
     )
@@ -32,7 +32,7 @@ fun DetailPokemonStats(pokemon: Pokemon) {
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        pokemon.stats.forEach { pokemonStat ->
+        stats.forEach { pokemonStat ->
             if (pokemonStat.name == "hp") {
                 DetailPokemonProgressBarStats(
                     statsType = "HP",
@@ -68,9 +68,41 @@ fun DetailPokemonStats(pokemon: Pokemon) {
         }
         DetailPokemonProgressBarStats(
             statsType = "EXP",
-            stats = pokemon.baseExperience,
-            maxStats = if (pokemon.baseExperience < 250) 250 else if (pokemon.baseExperience < 500) 500 else 700,
+            stats = baseExperience,
+            maxStats = if (baseExperience < 250) 250 else if (baseExperience < 500) 500 else 700,
             color = exp
         )
+    }
+}
+
+@ThemePreviews
+@Composable
+private fun PreviewTheme() {
+    PokedexTheme {
+        Surface {
+            val stats = listOf(
+                Stats(name = "hp", baseStat = 100),
+                Stats(name = "attack", baseStat = 100),
+                Stats(name = "defense", baseStat = 100),
+                Stats(name = "speed", baseStat = 100),
+            )
+            DetailPokemonStats(stats = stats, baseExperience = 100)
+        }
+    }
+}
+
+@OrientationPreviews
+@Composable
+private fun PreviewOrientation() {
+    PokedexTheme {
+        Surface {
+            val stats = listOf(
+                Stats(name = "hp", baseStat = 100),
+                Stats(name = "attack", baseStat = 100),
+                Stats(name = "defense", baseStat = 100),
+                Stats(name = "speed", baseStat = 100),
+            )
+            DetailPokemonStats(stats = stats, baseExperience = 100)
+        }
     }
 }

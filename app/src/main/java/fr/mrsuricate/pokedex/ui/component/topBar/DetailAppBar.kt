@@ -8,6 +8,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
@@ -16,9 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import fr.mrsuricate.pokedex.data.api.model.PokemonJsonModel
+import fr.mrsuricate.pokedex.ui.component.detail.OrientationPreviews
+import fr.mrsuricate.pokedex.ui.component.detail.ThemePreviews
 import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 import fr.mrsuricate.pokedex.ui.theme.colorPrimary
 
@@ -61,13 +62,26 @@ fun DetailAppBar(modifier: Modifier = Modifier, id: Int, onGoBack: () -> Unit) {
     )
 }
 
-@Preview(showBackground = true)
+@ThemePreviews
 @Composable
-private fun DetailAppBarPreview() {
-    val pokemon = PokemonJsonModel()
+private fun PreviewTheme() {
     PokedexTheme {
-        DetailAppBar(id = pokemon.id) {
+        Surface {
+            DetailAppBar(id = 1) {
 
+            }
+        }
+    }
+}
+
+@OrientationPreviews
+@Composable
+private fun PreviewOrientation() {
+    PokedexTheme {
+        Surface {
+            DetailAppBar(id = 1) {
+
+            }
         }
     }
 }

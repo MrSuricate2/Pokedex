@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
@@ -16,10 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import fr.mrsuricate.pokedex.ui.component.detail.OrientationPreviews
+import fr.mrsuricate.pokedex.ui.component.detail.ThemePreviews
 import fr.mrsuricate.pokedex.ui.navigation.Setting
 import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 import fr.mrsuricate.pokedex.ui.theme.colorPrimary
@@ -61,11 +63,24 @@ fun HomeAppBar(modifier: Modifier = Modifier, navController: NavHostController) 
     )
 }
 
-@Preview(showBackground = true)
+@ThemePreviews
 @Composable
-private fun PokedexAppBarPreview() {
-    val navController = rememberNavController()
+private fun PreviewTheme() {
     PokedexTheme {
-        HomeAppBar(navController = navController)
+        Surface {
+            val navController = rememberNavController()
+            HomeAppBar(navController = navController)
+        }
+    }
+}
+
+@OrientationPreviews
+@Composable
+private fun PreviewOrientation() {
+    PokedexTheme {
+        Surface {
+            val navController = rememberNavController()
+            HomeAppBar(navController = navController)
+        }
     }
 }

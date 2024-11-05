@@ -4,11 +4,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import fr.mrsuricate.pokedex.domain.model.Name
 import fr.mrsuricate.pokedex.domain.model.Type
+import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 
 @Composable
 fun DetailPokemonType(
@@ -27,6 +30,70 @@ fun DetailPokemonType(
                 types = type,
                 language = lang
             )
+        }
+    }
+}
+
+@ThemePreviews
+@Composable
+private fun PreviewTheme() {
+    PokedexTheme {
+        Surface {
+            val types = listOf(
+                Type(
+                    id = 10,
+                    name = "fire",
+                    names = listOf(
+                        Name(
+                            name = "Feu",
+                            language = "fr"
+                        )
+                    )
+                ),
+                Type(
+                    id = 11,
+                    name = "water",
+                    names = listOf(
+                        Name(
+                            name = "Eau",
+                            language = "fr"
+                        )
+                    )
+                ),
+            )
+            DetailPokemonType(types = types, lang = "fr")
+        }
+    }
+}
+
+@OrientationPreviews
+@Composable
+private fun PreviewOrientation() {
+    PokedexTheme {
+        Surface {
+            val types = listOf(
+                Type(
+                    id = 10,
+                    name = "fire",
+                    names = listOf(
+                        Name(
+                            name = "Feu",
+                            language = "fr"
+                        )
+                    )
+                ),
+                Type(
+                    id = 11,
+                    name = "water",
+                    names = listOf(
+                        Name(
+                            name = "Eau",
+                            language = "fr"
+                        )
+                    )
+                ),
+            )
+            DetailPokemonType(types = types, lang = "fr")
         }
     }
 }

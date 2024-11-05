@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -50,7 +52,8 @@ fun DetailScreen(
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
@@ -72,7 +75,8 @@ fun DetailScreen(
                 ) {
                     DisplayPokemon(
                         modifier = Modifier.size(200.dp),
-                        pokemon = pokemon
+                        url = pokemon.image,
+                        id = pokemon.id
                     )
                 }
             }
@@ -87,10 +91,10 @@ fun DetailScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                DetailPokemonWeight(pokemon)
-                DetailPokemonHeight(pokemon)
+                DetailPokemonWeight(weight = pokemon.weight)
+                DetailPokemonHeight(height = pokemon.height)
             }
-            DetailPokemonStats(pokemon)
+            DetailPokemonStats(stats = pokemon.stats, baseExperience = pokemon.baseExperience)
         }
     }
 }

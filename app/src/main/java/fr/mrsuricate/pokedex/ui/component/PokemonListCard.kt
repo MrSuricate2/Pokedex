@@ -1,5 +1,6 @@
 package fr.mrsuricate.pokedex.ui.component
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -9,6 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import fr.mrsuricate.pokedex.ui.viewModel.HomeViewModel
@@ -25,8 +27,17 @@ fun PokemonListCard(
 
     val pokemonList by homeViewModel.pokemonFlow.collectAsState()
 
+    // Récupère la configuration actuelle
+    val configuration = LocalConfiguration.current
+    // Définit le nombre de colonnes en fonction de l'orientation
+    val columns = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        3
+    } else {
+        2
+    }
+
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(columns),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier.padding(top = 8.dp)

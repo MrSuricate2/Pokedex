@@ -1,5 +1,7 @@
 package fr.mrsuricate.pokedex.ui.component.detail
 
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -8,18 +10,26 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 
 @Composable
-fun DetailPokemonProgressBarStats(statsType: String, stats: Int, maxStats: Int, color: Color) {
+fun DetailPokemonProgressBarStats(
+    statsType: String,
+    stats: Int,
+    maxStats: Int,
+    color: Color,
+    darkMode: Boolean = false
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -78,20 +88,48 @@ fun DetailPokemonProgressBarStats(statsType: String, stats: Int, maxStats: Int, 
             }
         }
     }
+
+}
+
+@Preview(name = "Dark Mode", showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Preview(name = "Light Mode", showBackground = true, uiMode = UI_MODE_NIGHT_NO)
+annotation class ThemePreviews
+
+@ThemePreviews
+@Composable
+private fun PreviewTheme() {
+    PokedexTheme {
+        Surface {
+            DetailPokemonProgressBarStats(
+                statsType = "HP",
+                stats = 100,
+                maxStats = 300,
+                color = Color.Red
+            )
+        }
+    }
 }
 
 @Preview(
-    backgroundColor = 0xFFFFFFFF,
+    name = "Landscape Mode",
     showBackground = true,
+    device = Devices.AUTOMOTIVE_1024p,
+    widthDp = 640
 )
+@Preview(name = "Portrait Mode", showBackground = true, device = Devices.PIXEL_4)
+annotation class OrientationPreviews
+
+@OrientationPreviews
 @Composable
-private fun DetailPokemonProgressBarStatsPreview() {
-    PokedexTheme(darkTheme = true) {
-        DetailPokemonProgressBarStats(
-            statsType = "HP",
-            stats = 100,
-            maxStats = 300,
-            color = Color.Red
-        )
+private fun PreviewOrientation() {
+    PokedexTheme {
+        Surface {
+            DetailPokemonProgressBarStats(
+                statsType = "HP",
+                stats = 100,
+                maxStats = 300,
+                color = Color.Red
+            )
+        }
     }
 }

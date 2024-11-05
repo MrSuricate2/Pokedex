@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import fr.mrsuricate.pokedex.ui.component.detail.OrientationPreviews
+import fr.mrsuricate.pokedex.ui.component.detail.ThemePreviews
 import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 
 @Composable
@@ -47,14 +49,26 @@ fun SettingsItem(
 
 }
 
-@Preview
+@ThemePreviews
 @Composable
-private fun SettingsItemPreview() {
-    PokedexTheme(
-        darkTheme = true
-    ) {
-        SettingsItem("Settings") {
+private fun PreviewTheme() {
+    PokedexTheme {
+        Surface {
+            SettingsItem("Language") {
 
+            }
+        }
+    }
+}
+
+@OrientationPreviews
+@Composable
+private fun PreviewOrientation() {
+    PokedexTheme {
+        Surface {
+            SettingsItem("Language") {
+
+            }
         }
     }
 }
