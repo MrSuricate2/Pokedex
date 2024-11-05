@@ -29,7 +29,7 @@ data class PokemonJsonModel(
     @SerializedName("past_abilities") var pastAbilities: ArrayList<PastAbilitiesItem> = arrayListOf(),
 ) {
 
-    fun toDomain(): Pokemon {
+    suspend fun toDomain(): Pokemon {
         return Pokemon(
             id = this.id,
             names = this.getNames(),
@@ -42,12 +42,10 @@ data class PokemonJsonModel(
         )
     }
 
-    private fun getNames(): List<Name> {
+    private suspend fun getNames(): List<Name> {
         val speciesResponse = PokemonApi.apiService.getSpecies(this.id)
         val listNames: MutableList<Name> = mutableListOf()
-        PokemonApi.executeApiCall(speciesResponse, onSuccess = {
-            it.body()?.let { it1 -> listNames.addAll(it1.toDomain()) }
-        })
+        speciesResponse.body().let { it?.let { it1 -> listNames.addAll(it1.toDomain()) } }
         return listNames
     }
 
@@ -56,15 +54,11 @@ data class PokemonJsonModel(
             ?: this.sprites.other.officialArtwork.frontDefault
     }
 
-    private fun getTypes(): List<Type> {
+    private suspend fun getTypes(): List<Type> {
         val listTypes: MutableList<Type> = mutableListOf()
         this.types.forEach { type ->
             val typeCall = PokemonApi.apiService.getType(name = type.type.name)
-            PokemonApi.executeApiCall(typeCall, onSuccess = { response ->
-                response.body()?.let {
-                    listTypes.add(it.toDomain())
-                }
-            })
+            typeCall.body().let { it?.let { it1 -> listTypes.add(it1.toDomain()) } }
         }
         return listTypes
     }

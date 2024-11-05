@@ -5,7 +5,6 @@ import fr.mrsuricate.pokedex.data.api.model.PokemonJsonModel
 import fr.mrsuricate.pokedex.data.api.model.PokemonResponse
 import fr.mrsuricate.pokedex.data.api.model.PokemonSpecies
 import fr.mrsuricate.pokedex.data.api.model.Types
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -25,14 +24,14 @@ interface PokemonApiService {
     ): Response<PokemonJsonModel>
 
     @GET("pokemon-species/{id}")
-    fun getSpecies(
+    suspend fun getSpecies(
         @Path("id") id: Int
-    ): Call<PokemonSpecies>
+    ): Response<PokemonSpecies>
 
     @GET("type/{name}")
-    fun getType(
+    suspend fun getType(
         @Path("name") name: String
-    ): Call<Types>
+    ): Response<Types>
 
     @GET("language")
     suspend fun getLanguages(

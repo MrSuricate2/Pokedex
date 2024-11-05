@@ -44,8 +44,10 @@ fun DetailScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            DetailAppBar(id = pokemon.id) {
-                onGoBack()
+            pokemon?.id?.let {
+                DetailAppBar(id = it) {
+                    onGoBack()
+                }
             }
         }
     ) { innerPadding ->
@@ -73,17 +75,19 @@ fun DetailScreen(
                         .padding(vertical = 16.dp)
                         .wrapContentSize(Alignment.Center)
                 ) {
-                    DisplayPokemon(
-                        modifier = Modifier.size(200.dp),
-                        url = pokemon.image,
-                        id = pokemon.id
-                    )
+                    pokemon?.image?.let {
+                        DisplayPokemon(
+                            modifier = Modifier.size(200.dp),
+                            url = it,
+                            id = pokemon.id
+                        )
+                    }
                 }
             }
             DetailPokemonName(
-                pokemon.names.find { it.language == lang }?.name ?: ""
+                pokemon?.names?.find { it.language == lang }?.name ?: ""
             )
-            DetailPokemonType(pokemon.types, lang)
+            pokemon?.types?.let { DetailPokemonType(it, lang) }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -91,10 +95,15 @@ fun DetailScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                DetailPokemonWeight(weight = pokemon.weight)
-                DetailPokemonHeight(height = pokemon.height)
+                pokemon?.weight?.let { DetailPokemonWeight(weight = it) }
+                pokemon?.height?.let { DetailPokemonHeight(height = it) }
             }
-            DetailPokemonStats(stats = pokemon.stats, baseExperience = pokemon.baseExperience)
+            pokemon?.stats?.let {
+                DetailPokemonStats(
+                    stats = it,
+                    baseExperience = pokemon.baseExperience
+                )
+            }
         }
     }
 }
