@@ -4,60 +4,45 @@ import fr.mrsuricate.pokedex.data.api.PokemonApiService
 import fr.mrsuricate.pokedex.data.api.model.PokemonType
 import fr.mrsuricate.pokedex.domain.model.Pokemon
 import fr.mrsuricate.pokedex.domain.model.Type
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 
 class PokemonRepositoryImpl(private val apiService: PokemonApiService) : PokemonRepository {
 
-
-    //todo recontruire l'objet domaine
     override suspend fun getPokemonList(offset: Int): List<Pokemon> {
         return try {
             val response = apiService.getPokemonList(offset = offset)
             if (response.isSuccessful) {
                 val pokemonResults = response.body()?.results ?: emptyList()
-                // Load details in parallel and filter out `nulls
-                coroutineScope {
-                    pokemonResults.map { pokemonSummary ->
-                        async {
-                            val pokemonResponse = apiService.getPokemonInfo(pokemonSummary.name)
-                            if (pokemonResponse.body()?.isDefault == true) {
-                                val image =
-                                    pokemonResponse.body()?.sprites?.other?.dreamWorld?.frontDefault
-                                        ?: pokemonResponse.body()?.sprites?.other?.officialArtwork?.frontDefault
-                                        ?: ""
-                                val stats = mutableMapOf<String, Int>()
-                                pokemonResponse.body()?.stats?.map {
-                                    stats.put(
-                                        it.stat.name,
-                                        it.baseStat
-                                    )
-                                }
 
-                                Pokemon(
-                                    id = pokemonResponse.body()?.id ?: 0,
-                                    names = getPokemonNames(pokemonResponse.body()?.id ?: 0),
-                                    baseExperience = pokemonResponse.body()?.baseExperience ?: 0,
-                                    height = pokemonResponse.body()?.height ?: 0,
-                                    weight = pokemonResponse.body()?.weight ?: 0,
-                                    image = image,
-                                    types = getPokemonTypes(
-                                        pokemonResponse.body()?.types ?: emptyList()
-                                    ),
-                                    stats = stats
-                                )
+                // Process each Pokémon result synchronously
+                pokemonResults.mapNotNull { pokemonSummary ->
+                    val pokemonResponse = apiService.getPokemonInfo(pokemonSummary.name)
+                    val body = pokemonResponse.body()
 
-                            } else {
-                                null
-                            }
-                        }
-                    }.mapNotNull { it.await() } // Filters out the resulting `null` values
+                    if (pokemonResponse.isSuccessful && body?.isDefault == true) {
+                        val image = body.sprites.other.dreamWorld.frontDefault
+                            ?: body.sprites.other.officialArtwork.frontDefault
+
+                        val stats = body.stats.associate { it.stat.name to it.baseStat }
+
+                        Pokemon(
+                            id = body.id,
+                            names = getPokemonNames(body.id),
+                            baseExperience = body.baseExperience,
+                            height = body.height,
+                            weight = body.weight,
+                            image = image,
+                            types = getPokemonTypes(body.types),
+                            stats = stats
+                        )
+                    } else {
+                        null // Exclude any unsuccessful or non-default Pokémon
+                    }
                 }
             } else {
-                emptyList() // Returns an empty list in the event of a network error
+                emptyList() // Returns an empty list if the initial API call fails
             }
         } catch (e: Exception) {
-            emptyList() // Network exception management
+            emptyList() // Returns an empty list in case of an exception
         }
     }
 
@@ -65,50 +50,25 @@ class PokemonRepositoryImpl(private val apiService: PokemonApiService) : Pokemon
     override suspend fun getPokemonNames(id: Int): Map<String, String> {
         val response = apiService.getSpecies(id)
 
-        val result = mutableMapOf<String, String>()
+        return response.body()?.names
+            ?.associate { names -> names.language.name to names.name } // Create a map directly
+            ?: emptyMap() // In case names list is null
 
-        if (response.isSuccessful) {
-            val namesResults = response.body()?.names ?: emptyList()
-            // Load details in parallel and filter out `nulls
-            coroutineScope {
-                namesResults.map { names ->
-                    result.put(
-                        names.language.name,
-                        names.name
-                    )
-                }
-            }
-            return result
-        } else {
-            return emptyMap() // Returns an empty list in the event of a network error
-        }
     }
 
     override suspend fun getPokemonTypes(types: List<PokemonType>): List<Type> {
-        val listTypes: MutableList<Type> = mutableListOf()
-        types.map { type ->
+        return types.map { type ->
             val response = apiService.getType(type.type.name)
-            coroutineScope {
-                if (response.isSuccessful) {
-                    val listname = mutableMapOf<String, String>()
-                    response.body()?.names?.map {
-                        listname.put(
-                            it.language.name,
-                            it.name
-                        )
-                    }
-                    listTypes.add(
-                        Type(
-                            id = response.body()?.id ?: 0,
-                            name = listname
-                        )
-                    )
-                } else {
-                    return@coroutineScope
-                }
-            }
+
+            val namesMap = response.body()?.names
+                ?.associate { it.language.name to it.name } ?: emptyMap()
+
+            Type(
+                id = response.body()?.id ?: 0,
+                name = namesMap
+            )
         }
-        return listTypes
     }
+
 
 }
