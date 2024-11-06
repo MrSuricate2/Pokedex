@@ -2,7 +2,6 @@ package fr.mrsuricate.pokedex.data.api.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import fr.mrsuricate.pokedex.domain.model.Type
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -18,17 +17,4 @@ data class Types(
     @SerializedName("pokemon") var pokemon: List<TypePokemon?>? = null,
     @SerializedName("moves") var moves: List<NamedApiResource?>? = null,
     @SerializedName("sprites") var sprites: PokemonSprites = PokemonSprites(),
-) : Parcelable {
-    fun toDomain(): Type {
-        val listName: MutableList<fr.mrsuricate.pokedex.domain.model.Name> = mutableListOf()
-        this.names.forEach { name ->
-            listName.add(name.toDomain())
-        }
-        return Type(
-            id = this.id,
-            name = this.name,
-            names = listName
-        )
-    }
-}
-
+) : Parcelable

@@ -1,4 +1,4 @@
-package fr.mrsuricate.pokedex.ui.component
+package fr.mrsuricate.pokedex.ui.component.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import fr.mrsuricate.pokedex.domain.model.Name
 import fr.mrsuricate.pokedex.domain.model.Pokemon
+import fr.mrsuricate.pokedex.ui.component.DisplayPokemon
 import fr.mrsuricate.pokedex.ui.component.detail.OrientationPreviews
 import fr.mrsuricate.pokedex.ui.component.detail.ThemePreviews
 import fr.mrsuricate.pokedex.ui.navigation.Detail
@@ -57,7 +57,7 @@ fun PokemonCard(
             )
 
         }
-        pokemon.names.find { it.language == lang }?.name?.let {
+        pokemon.names[lang]?.let {
             PokemonName(
                 name = it
             )
@@ -73,22 +73,13 @@ private fun PreviewTheme() {
             val navController = rememberNavController()
             val pokemon = Pokemon(
                 id = 1,
-                names = listOf(
-                    Name(
-                        language = "en",
-                        name = "Bulbasaur"
-                    ),
-                    Name(
-                        language = "fr",
-                        name = "Bulbizarre"
-                    )
-                ),
+                names = mapOf("en" to "Bulbasaur", "fr" to "Bulbizarre"),
                 baseExperience = 100,
                 height = 10,
                 weight = 10,
                 image = "",
                 types = listOf(),
-                stats = listOf()
+                stats = mapOf()
             )
             PokemonCard(
                 pokemon = pokemon,
@@ -107,22 +98,13 @@ private fun PreviewOrientation() {
             val navController = rememberNavController()
             val pokemon = Pokemon(
                 id = 1,
-                names = listOf(
-                    Name(
-                        language = "en",
-                        name = "Bulbasaur"
-                    ),
-                    Name(
-                        language = "fr",
-                        name = "Bulbizarre"
-                    )
-                ),
+                names = mapOf("en" to "Bulbasaur", "fr" to "Bulbizarre"),
                 baseExperience = 100,
                 height = 10,
                 weight = 10,
                 image = "",
                 types = listOf(),
-                stats = listOf()
+                stats = mapOf()
             )
             PokemonCard(
                 pokemon = pokemon,

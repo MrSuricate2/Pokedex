@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import fr.mrsuricate.pokedex.ui.component.PokemonListCard
+import fr.mrsuricate.pokedex.ui.component.home.PokemonListCard
 import fr.mrsuricate.pokedex.ui.component.topBar.HomeAppBar
 import fr.mrsuricate.pokedex.ui.viewModel.HomeViewModel
 import fr.mrsuricate.pokedex.ui.viewModel.SettingViewModel

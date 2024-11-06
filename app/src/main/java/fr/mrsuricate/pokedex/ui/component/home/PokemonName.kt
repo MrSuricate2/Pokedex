@@ -1,4 +1,4 @@
-package fr.mrsuricate.pokedex.ui.component
+package fr.mrsuricate.pokedex.ui.component.home
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

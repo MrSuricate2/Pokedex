@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import fr.mrsuricate.pokedex.domain.model.Name
 import fr.mrsuricate.pokedex.domain.model.Type
 import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 
@@ -25,7 +24,8 @@ fun DetailPokemonTypeItem(
                 RoundedCornerShape(16.dp)
             )
     ) {
-        types.names.find { it.language == language }?.name?.let {
+
+        types.name[language]?.let {
             Text(
                 text = it,
                 modifier = Modifier
@@ -45,13 +45,7 @@ private fun PreviewTheme() {
         Surface {
             val type = Type(
                 id = 10,
-                name = "fire",
-                names = listOf(
-                    Name(
-                        name = "Feu",
-                        language = "fr"
-                    )
-                )
+                name = mapOf("Feu" to "fr")
             )
             DetailPokemonTypeItem(types = type, language = "fr")
         }
@@ -65,13 +59,7 @@ private fun PreviewOrientation() {
         Surface {
             val type = Type(
                 id = 10,
-                name = "fire",
-                names = listOf(
-                    Name(
-                        name = "Feu",
-                        language = "fr"
-                    )
-                )
+                name = mapOf("Feu" to "fr")
             )
             DetailPokemonTypeItem(types = type, language = "fr")
         }

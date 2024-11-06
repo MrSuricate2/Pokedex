@@ -85,7 +85,7 @@ fun DetailScreen(
                 }
             }
             DetailPokemonName(
-                pokemon?.names?.find { it.language == lang }?.name ?: ""
+                pokemon?.names?.get(lang) ?: ""
             )
             pokemon?.types?.let { DetailPokemonType(it, lang) }
             Row(

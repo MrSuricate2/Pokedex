@@ -1,5 +1,6 @@
 package fr.mrsuricate.pokedex.ui.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -40,6 +41,7 @@ class HomeViewModel(private val repository: PokemonRepository) : ViewModel() {
 
     private suspend fun loadPokemonList(offset: Int = 0) {
         val pokemonList = repository.getPokemonList(offset)
+        Log.d("HomeViewModel", "loadPokemonList: ${pokemonList.size}")
         if (pokemonList.isNotEmpty()) {
             // Adds new Pokémon to the existing list
             _pokemonList.addAll(pokemonList)

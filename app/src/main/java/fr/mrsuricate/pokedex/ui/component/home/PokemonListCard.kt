@@ -1,4 +1,4 @@
-package fr.mrsuricate.pokedex.ui.component
+package fr.mrsuricate.pokedex.ui.component.home
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement

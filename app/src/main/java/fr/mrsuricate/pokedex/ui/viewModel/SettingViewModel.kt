@@ -28,6 +28,8 @@ class SettingViewModel(private val repository: LanguageRepository) : ViewModel()
         getLanguage()
     }
 
+    //todo Extraire la langue hors du viewModel
+
     private fun getLanguage() {
         viewModelScope.launch {
             getLanguageResult()

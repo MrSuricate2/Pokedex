@@ -23,8 +23,7 @@ import fr.mrsuricate.pokedex.ui.theme.water
 
 class Type(
     var id: Int,
-    val name: String,
-    val names: List<Name>,
+    val name: Map<String, String>,
 ) {
     fun getColor(): Color {
         val color: Color

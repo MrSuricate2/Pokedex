@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import fr.mrsuricate.pokedex.domain.model.Name
 import fr.mrsuricate.pokedex.domain.model.Type
 import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 
@@ -42,23 +41,11 @@ private fun PreviewTheme() {
             val types = listOf(
                 Type(
                     id = 10,
-                    name = "fire",
-                    names = listOf(
-                        Name(
-                            name = "Feu",
-                            language = "fr"
-                        )
-                    )
+                    name = mapOf("Feu" to "fr")
                 ),
                 Type(
                     id = 11,
-                    name = "water",
-                    names = listOf(
-                        Name(
-                            name = "Eau",
-                            language = "fr"
-                        )
-                    )
+                    name = mapOf("Eau" to "fr")
                 ),
             )
             DetailPokemonType(types = types, lang = "fr")
@@ -74,23 +61,11 @@ private fun PreviewOrientation() {
             val types = listOf(
                 Type(
                     id = 10,
-                    name = "fire",
-                    names = listOf(
-                        Name(
-                            name = "Feu",
-                            language = "fr"
-                        )
-                    )
+                    name = mapOf("Feu" to "fr")
                 ),
                 Type(
                     id = 11,
-                    name = "water",
-                    names = listOf(
-                        Name(
-                            name = "Eau",
-                            language = "fr"
-                        )
-                    )
+                    name = mapOf("Eau" to "fr")
                 ),
             )
             DetailPokemonType(types = types, lang = "fr")

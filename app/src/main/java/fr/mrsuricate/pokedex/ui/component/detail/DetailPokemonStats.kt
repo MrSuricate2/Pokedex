@@ -11,7 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import fr.mrsuricate.pokedex.domain.model.Stats
 import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 import fr.mrsuricate.pokedex.ui.theme.atk
 import fr.mrsuricate.pokedex.ui.theme.def
@@ -20,7 +19,7 @@ import fr.mrsuricate.pokedex.ui.theme.hp
 import fr.mrsuricate.pokedex.ui.theme.spd
 
 @Composable
-fun DetailPokemonStats(stats: List<Stats>, baseExperience: Int) {
+fun DetailPokemonStats(stats: Map<String, Int>, baseExperience: Int) {
     Text(
         fontSize = 24.sp,
         text = "Stats"
@@ -32,32 +31,32 @@ fun DetailPokemonStats(stats: List<Stats>, baseExperience: Int) {
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        stats.forEach { pokemonStat ->
-            if (pokemonStat.name == "hp") {
+        stats.forEach { (statName, statValue) ->
+            if (statName == "hp") {
                 DetailPokemonProgressBarStats(
                     statsType = "HP",
-                    stats = pokemonStat.baseStat,
+                    stats = statValue,
                     color = hp
                 )
             }
-            if (pokemonStat.name == "attack") {
+            if (statName == "attack") {
                 DetailPokemonProgressBarStats(
                     statsType = "ATK",
-                    stats = pokemonStat.baseStat,
+                    stats = statValue,
                     color = atk
                 )
             }
-            if (pokemonStat.name == "defense") {
+            if (statName == "defense") {
                 DetailPokemonProgressBarStats(
                     statsType = "DEF",
-                    stats = pokemonStat.baseStat,
+                    stats = statValue,
                     color = def
                 )
             }
-            if (pokemonStat.name == "speed") {
+            if (statName == "speed") {
                 DetailPokemonProgressBarStats(
                     statsType = "SPD",
-                    stats = pokemonStat.baseStat,
+                    stats = statValue,
                     color = spd
                 )
             }
@@ -75,12 +74,7 @@ fun DetailPokemonStats(stats: List<Stats>, baseExperience: Int) {
 private fun PreviewTheme() {
     PokedexTheme {
         Surface {
-            val stats = listOf(
-                Stats(name = "hp", baseStat = 100),
-                Stats(name = "attack", baseStat = 100),
-                Stats(name = "defense", baseStat = 100),
-                Stats(name = "speed", baseStat = 100),
-            )
+            val stats = mapOf("hp" to 100, "attack" to 100, "defense" to 100, "speed" to 100)
             DetailPokemonStats(stats = stats, baseExperience = 100)
         }
     }
@@ -91,12 +85,7 @@ private fun PreviewTheme() {
 private fun PreviewOrientation() {
     PokedexTheme {
         Surface {
-            val stats = listOf(
-                Stats(name = "hp", baseStat = 100),
-                Stats(name = "attack", baseStat = 100),
-                Stats(name = "defense", baseStat = 100),
-                Stats(name = "speed", baseStat = 100),
-            )
+            val stats = mapOf("hp" to 100, "attack" to 100, "defense" to 100, "speed" to 100)
             DetailPokemonStats(stats = stats, baseExperience = 100)
         }
     }
