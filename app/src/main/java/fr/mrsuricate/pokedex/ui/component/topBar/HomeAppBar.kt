@@ -29,6 +29,9 @@ import fr.mrsuricate.pokedex.ui.theme.colorPrimary
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeAppBar(modifier: Modifier = Modifier, navController: NavHostController) {
+
+    //todo barre de recherche
+
     TopAppBar(
         title = {
             Row(
