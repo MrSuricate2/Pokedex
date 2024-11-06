@@ -39,25 +39,18 @@ class HomeViewModel(private val repository: PokemonRepository) : ViewModel() {
     }
 
     private suspend fun loadPokemonList(offset: Int = 0) {
-        try {
-            val pokemonList = repository.getPokemonList(offset)
-            if (pokemonList.isNotEmpty()) {
-                // Adds new Pokémon to the existing list
-                _pokemonList.addAll(pokemonList)
-                // Updates StateFlow
-                _pokemonFlow.value = _pokemonList.toList()
-            }
-        } catch (_: Exception) {
-
+        val pokemonList = repository.getPokemonList(offset)
+        if (pokemonList.isNotEmpty()) {
+            // Adds new Pokémon to the existing list
+            _pokemonList.addAll(pokemonList)
+            // Updates StateFlow
+            _pokemonFlow.value = _pokemonList.toList()
         }
     }
 
 
     fun addPokemonToList() {
         viewModelScope.launch {
-//            val urlString = pokemonData.value.pokemonResponse.next ?: return@launch
-//            val uri = Uri.parse(urlString)
-//            val offset = uri.getQueryParameter("offset")?.toIntOrNull() ?: 0
             loadPokemonList(offset = _pokemonList.size)
         }
     }

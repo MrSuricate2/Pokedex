@@ -35,14 +35,10 @@ class SettingViewModel(private val repository: LanguageRepository) : ViewModel()
     }
 
     private suspend fun getLanguageResult() {
-        try {
-            val languageList = repository.getLanguageList()
-            if (languageList.isNotEmpty()) {
-                _language.addAll(languageList)
-                _languageFlow.value = _language.toList()
-            }
-        } catch (_: Exception) {
-
+        val languageList = repository.getLanguageList()
+        if (languageList.isNotEmpty()) {
+            _language.addAll(languageList)
+            _languageFlow.value = _language.toList()
         }
     }
 

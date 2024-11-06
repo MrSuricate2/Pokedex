@@ -37,7 +37,6 @@ fun DetailPokemonStats(stats: List<Stats>, baseExperience: Int) {
                 DetailPokemonProgressBarStats(
                     statsType = "HP",
                     stats = pokemonStat.baseStat,
-                    maxStats = if (pokemonStat.baseStat < 150) 150 else 300,
                     color = hp
                 )
             }
@@ -45,7 +44,6 @@ fun DetailPokemonStats(stats: List<Stats>, baseExperience: Int) {
                 DetailPokemonProgressBarStats(
                     statsType = "ATK",
                     stats = pokemonStat.baseStat,
-                    maxStats = if (pokemonStat.baseStat < 100) 100 else 200,
                     color = atk
                 )
             }
@@ -53,7 +51,6 @@ fun DetailPokemonStats(stats: List<Stats>, baseExperience: Int) {
                 DetailPokemonProgressBarStats(
                     statsType = "DEF",
                     stats = pokemonStat.baseStat,
-                    maxStats = if (pokemonStat.baseStat < 150) 150 else 250,
                     color = def
                 )
             }
@@ -61,7 +58,6 @@ fun DetailPokemonStats(stats: List<Stats>, baseExperience: Int) {
                 DetailPokemonProgressBarStats(
                     statsType = "SPD",
                     stats = pokemonStat.baseStat,
-                    maxStats = if (pokemonStat.baseStat < 150) 150 else 250,
                     color = spd
                 )
             }
@@ -69,7 +65,6 @@ fun DetailPokemonStats(stats: List<Stats>, baseExperience: Int) {
         DetailPokemonProgressBarStats(
             statsType = "EXP",
             stats = baseExperience,
-            maxStats = if (baseExperience < 250) 250 else if (baseExperience < 500) 500 else 700,
             color = exp
         )
     }

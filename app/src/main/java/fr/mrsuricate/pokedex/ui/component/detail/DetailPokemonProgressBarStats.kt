@@ -26,9 +26,15 @@ import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 fun DetailPokemonProgressBarStats(
     statsType: String,
     stats: Int,
-    maxStats: Int,
     color: Color
 ) {
+    val maxStats = when {
+        stats < 75 -> 150
+        stats < 125 -> 250
+        stats < 250 -> 500
+        else -> 700
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -102,7 +108,6 @@ private fun PreviewTheme() {
             DetailPokemonProgressBarStats(
                 statsType = "HP",
                 stats = 100,
-                maxStats = 300,
                 color = Color.Red
             )
         }
@@ -126,7 +131,6 @@ private fun PreviewOrientation() {
             DetailPokemonProgressBarStats(
                 statsType = "HP",
                 stats = 100,
-                maxStats = 300,
                 color = Color.Red
             )
         }
