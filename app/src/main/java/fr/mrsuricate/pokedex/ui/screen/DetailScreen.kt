@@ -39,7 +39,7 @@ fun DetailScreen(
     val settingViewModel: SettingViewModel = koinViewModel()
     val detailViewModel: DetailViewModel = koinViewModel()
     val pokemon = detailViewModel.pokemon
-    val lang: String = settingViewModel.selectedLanguage.value ?: "fr"
+    val lang: String = settingViewModel.getSelectedLangue()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),

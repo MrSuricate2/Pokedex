@@ -17,7 +17,7 @@ import org.koin.androidx.compose.koinViewModel
 fun SettingLanguageScreen(onGoBack: () -> Unit) {
     val settingViewModel: SettingViewModel = koinViewModel()
     val languageList = settingViewModel.languageFlow.value
-    val selectedLanguage = settingViewModel.selectedLanguage.value
+    val selectedLanguage = settingViewModel.getSelectedLangue()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -41,7 +41,7 @@ fun SettingLanguageScreen(onGoBack: () -> Unit) {
                         SettingLanguageItem(
                             text = it.name,
                             onClick = {
-                                settingViewModel.changeSelectedLangue(language.language)
+                                settingViewModel.setSelectedLangue(language.language)
                                 onGoBack()
                             }
                         )

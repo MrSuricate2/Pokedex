@@ -5,6 +5,7 @@ import fr.mrsuricate.pokedex.domain.repository.LanguageRepository
 import fr.mrsuricate.pokedex.domain.repository.LanguageRepositoryImpl
 import fr.mrsuricate.pokedex.domain.repository.PokemonRepository
 import fr.mrsuricate.pokedex.domain.repository.PokemonRepositoryImpl
+import fr.mrsuricate.pokedex.domain.useCase.LanguageSelected
 import fr.mrsuricate.pokedex.ui.viewModel.DetailViewModel
 import fr.mrsuricate.pokedex.ui.viewModel.HomeViewModel
 import fr.mrsuricate.pokedex.ui.viewModel.SettingViewModel
@@ -14,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 val appModule = module {
     single { HomeViewModel(get()) }
-    single { SettingViewModel(get()) }
+    single { SettingViewModel(get(), get()) }
     single { DetailViewModel() }
     single {
         Retrofit.Builder()
@@ -25,6 +26,7 @@ val appModule = module {
     single {
         get<Retrofit>().create(PokemonApiService::class.java)
     }
+    single { LanguageSelected }
     single<PokemonRepository> { PokemonRepositoryImpl(get()) }
-    single<LanguageRepository> { LanguageRepositoryImpl(get()) }
+    single<LanguageRepository> { LanguageRepositoryImpl(get(), get()) }
 }

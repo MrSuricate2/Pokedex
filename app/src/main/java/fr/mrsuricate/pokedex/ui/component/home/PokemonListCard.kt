@@ -19,8 +19,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun PokemonListCard(
     modifier: Modifier = Modifier,
-    navController: NavHostController,
-    lang: String
+    navController: NavHostController
 ) {
     // ViewModel singleton injection
     val homeViewModel: HomeViewModel = koinViewModel()
@@ -46,7 +45,6 @@ fun PokemonListCard(
             pokemonList[index].let { pokemon ->
                 PokemonCard(
                     pokemon = pokemon,
-                    lang = lang,
                     navController = navController
                 )
 

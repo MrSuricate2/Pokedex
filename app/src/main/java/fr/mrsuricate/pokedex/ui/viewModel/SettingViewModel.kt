@@ -1,17 +1,19 @@
 package fr.mrsuricate.pokedex.ui.viewModel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fr.mrsuricate.pokedex.domain.model.Language
 import fr.mrsuricate.pokedex.domain.repository.LanguageRepository
+import fr.mrsuricate.pokedex.domain.useCase.LanguageSelected
 import fr.mrsuricate.pokedex.ui.navigation.SettingLanguage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class SettingViewModel(private val repository: LanguageRepository) : ViewModel() {
+class SettingViewModel(
+    private val repository: LanguageRepository,
+    private val language: LanguageSelected
+) : ViewModel() {
 
     private var _settings: MutableMap<String, String> = mutableMapOf()
     val settings: Map<String, String> = _settings
@@ -20,15 +22,10 @@ class SettingViewModel(private val repository: LanguageRepository) : ViewModel()
     private val _languageFlow = MutableStateFlow<List<Language>>(emptyList())
     val languageFlow: StateFlow<List<Language>> = _languageFlow
 
-    private val _selectedLanguage: MutableLiveData<String> = MutableLiveData("fr")
-    val selectedLanguage: LiveData<String> = _selectedLanguage
-
     init {
-        _settings.put("Langue", SettingLanguage.route)
+        _settings["Langue"] = SettingLanguage.route
         getLanguage()
     }
-
-    //todo Extraire la langue hors du viewModel
 
     private fun getLanguage() {
         viewModelScope.launch {
@@ -44,7 +41,11 @@ class SettingViewModel(private val repository: LanguageRepository) : ViewModel()
         }
     }
 
-    fun changeSelectedLangue(lang: String) {
-        _selectedLanguage.value = lang
+    fun getSelectedLangue(): String {
+        return this.language.getLanguage()
+    }
+
+    fun setSelectedLangue(lang: String) {
+        this.language.setLanguage(lang)
     }
 }

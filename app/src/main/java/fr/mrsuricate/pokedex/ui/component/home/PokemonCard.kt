@@ -22,16 +22,19 @@ import fr.mrsuricate.pokedex.ui.component.detail.ThemePreviews
 import fr.mrsuricate.pokedex.ui.navigation.Detail
 import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 import fr.mrsuricate.pokedex.ui.viewModel.DetailViewModel
+import fr.mrsuricate.pokedex.ui.viewModel.SettingViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun PokemonCard(
     pokemon: Pokemon,
     modifier: Modifier = Modifier,
-    navController: NavHostController,
-    lang: String
+    navController: NavHostController
 ) {
     val detailViewModel: DetailViewModel = koinViewModel()
+    val settingViewModel: SettingViewModel = koinViewModel()
+
+    val lang: String = settingViewModel.getSelectedLangue()
 
     Card(
         colors = CardDefaults.cardColors(
@@ -83,8 +86,7 @@ private fun PreviewTheme() {
             )
             PokemonCard(
                 pokemon = pokemon,
-                navController = navController,
-                lang = "fr"
+                navController = navController
             )
         }
     }
@@ -108,8 +110,7 @@ private fun PreviewOrientation() {
             )
             PokemonCard(
                 pokemon = pokemon,
-                navController = navController,
-                lang = "fr"
+                navController = navController
             )
         }
     }

@@ -46,7 +46,6 @@ class PokemonRepositoryImpl(private val apiService: PokemonApiService) : Pokemon
         }
     }
 
-
     override suspend fun getPokemonNames(id: Int): Map<String, String> {
         val response = apiService.getSpecies(id)
 
