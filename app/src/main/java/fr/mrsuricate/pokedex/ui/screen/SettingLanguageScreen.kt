@@ -40,6 +40,7 @@ fun SettingLanguageScreen(onGoBack: () -> Unit) {
                     displayName?.let {
                         SettingLanguageItem(
                             text = it.name,
+                            selectedLanguage = language.language == selectedLanguage,
                             onClick = {
                                 settingViewModel.setSelectedLangue(language.language)
                                 onGoBack()
