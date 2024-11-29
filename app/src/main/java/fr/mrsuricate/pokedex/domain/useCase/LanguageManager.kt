@@ -1,6 +1,6 @@
 package fr.mrsuricate.pokedex.domain.useCase
 
-object LanguageSelected {
+class LanguageManager {
     private var LANGUAGE = "fr"
 
     fun getLanguage(): String {
@@ -10,4 +10,6 @@ object LanguageSelected {
     fun setLanguage(language: String) {
         LANGUAGE = language
     }
+
+    //todo Ajouter içi l'appel du repo pour retourner la liste des langues
 }

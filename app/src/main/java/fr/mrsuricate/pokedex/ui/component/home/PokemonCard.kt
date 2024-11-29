@@ -35,6 +35,7 @@ fun PokemonCard(
     val settingViewModel: SettingViewModel = koinViewModel()
 
     val lang: String = settingViewModel.getSelectedLangue()
+    //todo regarder à supprimer
 
     Card(
         colors = CardDefaults.cardColors(
@@ -44,6 +45,7 @@ fun PokemonCard(
         onClick = {
             detailViewModel.setPokemon(pokemon)
             navController.navigate(Detail.route)
+            //todo passer les arguments pokemon depuis le navController
         }
     ) {
 

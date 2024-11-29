@@ -2,15 +2,15 @@ package fr.mrsuricate.pokedex.domain.repository
 
 import android.util.Log
 import fr.mrsuricate.pokedex.data.api.PokemonApiService
+import fr.mrsuricate.pokedex.data.cache.CacheManager
 import fr.mrsuricate.pokedex.domain.model.Language
-import fr.mrsuricate.pokedex.domain.useCase.LanguageSelected
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 
 class LanguageRepositoryImpl(
     private val apiService: PokemonApiService,
-    private val language: LanguageSelected
+    private val cacheManager: CacheManager
 ) : LanguageRepository {
 
     override suspend fun getLanguageList(): List<Language> {
@@ -38,13 +38,5 @@ class LanguageRepositoryImpl(
         } catch (e: Exception) {
             emptyList()
         }
-    }
-
-    override fun getLanguage(): String {
-        return language.getLanguage()
-    }
-
-    override fun setLanguage(language: String) {
-        this.language.setLanguage(language)
     }
 }

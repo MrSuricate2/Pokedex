@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fr.mrsuricate.pokedex.domain.model.Language
 import fr.mrsuricate.pokedex.domain.repository.LanguageRepository
-import fr.mrsuricate.pokedex.domain.useCase.LanguageSelected
+import fr.mrsuricate.pokedex.domain.useCase.LanguageManager
 import fr.mrsuricate.pokedex.ui.navigation.SettingLanguage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class SettingViewModel(
     private val repository: LanguageRepository,
-    private val language: LanguageSelected
+    private val language: LanguageManager
 ) : ViewModel() {
 
     private var _settings: MutableMap<String, String> = mutableMapOf()

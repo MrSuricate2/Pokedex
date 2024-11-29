@@ -1,7 +1,7 @@
 package fr.mrsuricate.pokedex.ui
 
 import android.app.Application
-import fr.mrsuricate.pokedex.ui.module.appModule
+import fr.mrsuricate.pokedex.ui.koin.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

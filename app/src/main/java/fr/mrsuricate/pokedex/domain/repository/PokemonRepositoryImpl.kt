@@ -1,5 +1,6 @@
 package fr.mrsuricate.pokedex.domain.repository
 
+import android.util.Log
 import fr.mrsuricate.pokedex.data.api.PokemonApiService
 import fr.mrsuricate.pokedex.data.api.model.PokemonType
 import fr.mrsuricate.pokedex.domain.model.Pokemon
@@ -11,6 +12,7 @@ class PokemonRepositoryImpl(private val apiService: PokemonApiService) : Pokemon
         return try {
             val response = apiService.getPokemonList(offset = offset)
             if (response.isSuccessful) {
+                Log.d("PokemonRepositoryImpl", "response: ${response.isSuccessful}")
                 val pokemonResults = response.body()?.results ?: emptyList()
 
                 // Process each Pokémon result synchronously
@@ -60,7 +62,8 @@ class PokemonRepositoryImpl(private val apiService: PokemonApiService) : Pokemon
             val response = apiService.getType(type.type.name)
 
             val namesMap = response.body()?.names
-                ?.associate { it.language.name to it.name } ?: emptyMap()
+                ?.associate { it.language.name to it.name }
+                ?: emptyMap()
 
             Type(
                 id = response.body()?.id ?: 0,
