@@ -2,12 +2,18 @@ package fr.mrsuricate.pokedex.data.cache
 
 class CacheManager(private val fileManager: FileManager) {
 
-    fun getCache(fileName: String): String {
-        return fileManager.loadData(fileName)
-    }
+    fun cacheValue(data: Any, url: String) {
+        when (url) {
+            "https://pokeapi.co/api/v2/pokemon" -> fileManager.saveData(
+                data.toString(),
+                "pokemons.txt"
+            )
 
-    fun setCache(data: String, fileName: String) {
-        fileManager.saveData(data, fileName)
+            "https://pokeapi.co/api/v2/language" -> fileManager.saveData(
+                data.toString(),
+                "language.txt"
+            )
+        }
     }
 
 }

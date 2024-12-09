@@ -1,7 +1,10 @@
 package fr.mrsuricate.pokedex.data.api.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class PokemonJsonModel(
     @SerializedName("id") var id: Int = 0,
     @SerializedName("name") var name: String = String(),
@@ -23,4 +26,4 @@ data class PokemonJsonModel(
     @SerializedName("stats") var stats: ArrayList<PokemonStat> = arrayListOf(),
     @SerializedName("types") var types: ArrayList<PokemonType> = arrayListOf(),
     @SerializedName("past_abilities") var pastAbilities: ArrayList<PastAbilitiesItem> = arrayListOf(),
-)
+) : Parcelable
