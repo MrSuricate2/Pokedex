@@ -2,17 +2,14 @@ package fr.mrsuricate.pokedex.data.cache
 
 class CacheManager(private val fileManager: FileManager) {
 
-    fun cacheValue(data: Any, url: String) {
-        when (url) {
-            "https://pokeapi.co/api/v2/pokemon" -> fileManager.saveData(
-                data.toString(),
-                "pokemons.txt"
-            )
-
-            "https://pokeapi.co/api/v2/language" -> fileManager.saveData(
-                data.toString(),
-                "language.txt"
-            )
+    fun <T> cacheValue(data: T, url: String) {
+        if (url == "https://pokeapi.co/api/v2/pokemon") {
+            fileManager.saveData(data.toString(), "pokemon.txt")
+        } else if (url.startsWith("https://pokeapi.co/api/v2/pokemon/")) {
+            val pokemon = url.replace("https://pokeapi.co/api/v2/pokemon/", "")
+            fileManager.saveData(data.toString(), "pokemon_$pokemon.txt")
+        } else if (url == "https://pokeapi.co/api/v2/language") {
+            fileManager.saveData(data.toString(), "language.txt")
         }
     }
 
