@@ -1,5 +1,6 @@
 package fr.mrsuricate.pokedex.data.cache
 
+import fr.mrsuricate.pokedex.data.api.model.NamedApiResource
 import org.junit.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
@@ -22,7 +23,7 @@ class CacheManagerTest {
         val fileName: String = "https://pokeapi.co/api/v2/pokemon"
 
         // When
-        cacheManager.cacheValue(Any(), fileName)
+        cacheManager.cacheValue("", fileName)
 
         // Then
         verify(fileManager).saveData(any(), eq("pokemon.txt"))
@@ -36,7 +37,7 @@ class CacheManagerTest {
         val fileName: String = "https://pokeapi.co/api/v2/pokemon/pikachu"
 
         // When
-        cacheManager.cacheValue(Any(), fileName)
+        cacheManager.cacheValue("", fileName)
 
         // Then
         verify(fileManager).saveData(any(), eq("pokemon_pikachu.txt"))
@@ -51,25 +52,27 @@ class CacheManagerTest {
         val fileName: String = "https://pokeapi.co/api/v2/language"
 
         // When
-        cacheManager.cacheValue(Any(), fileName)
+        cacheManager.cacheValue("", fileName)
 
         // Then
         verify(fileManager).saveData(any(), eq("language.txt"))
     }
 
-    //todo check les triple chevron
-//    @Test
-//    fun `should create file with serialize objet`() {
-//        // Given
-//        val fileManager: FileManager = mock { }
-//        val cacheManager = CacheManager(fileManager)
-//        val gson = Gson()
-//        val data = gson.toJson(NamedApiResource())
-//
-//        // When
-//        cacheManager.cacheValue(data, any())
-//
-//        // Then
-//        verify(fileManager).saveData("{\"name\":\"\",\"url\":\"\"}", any())
-//    }
+    @Test
+    fun `should create file with serialize objet`() {
+        // Given
+        val fileManager: FileManager = mock { }
+        val cacheManager = CacheManager(fileManager)
+
+        // When
+        cacheManager.cacheValue(
+            data = NamedApiResource(),
+            url = "https://pokeapi.co/api/v2/language"
+        )
+
+        val data = """{"name":"","url":""}"""
+
+        // Then
+        verify(fileManager).saveData(eq(data), any())
+    }
 }
