@@ -75,4 +75,23 @@ class CacheManagerTest {
         // Then
         verify(fileManager).saveData(eq(data), any())
     }
+
+
+    @Test
+    fun `should retrieve object from cache`() {
+        // Given
+        val fileManager: FileManager = mock {
+            on { loadData(any()) }.thenReturn("""{"name":"Pikachu","url":"https://pokeapi.co/api/v2/pokemon/pikachu"}""")
+        }
+        val cacheManager = CacheManager(fileManager)
+
+        // When
+        val result = cacheManager.retrieveValue(
+            "https://pokeapi.co/api/v2/pokemon/pikachu",
+            NamedApiResource::class.java
+        )
+
+        // Then
+        assert(result.name == "Pikachu")
+    }
 }
