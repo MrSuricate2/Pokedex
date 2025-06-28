@@ -2,6 +2,7 @@ package fr.mrsuricate.pokedex.ui.screen
 
 import android.content.pm.PackageManager
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,7 +16,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import fr.mrsuricate.pokedex.ui.component.setting.SettingsItem
+import fr.mrsuricate.pokedex.ui.component.setting.SettingItem
+import fr.mrsuricate.pokedex.ui.component.setting.SettingsMenuItem
 import fr.mrsuricate.pokedex.ui.component.topBar.SettingAppBar
 import fr.mrsuricate.pokedex.ui.viewModel.SettingViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -49,20 +51,31 @@ fun SettingScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            // Show list at top
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 40.dp) // To prevent the List from colliding with the Text
-            ) {
-                items(settingViewModel.settings.size) { index ->
-                    SettingsItem(
-                        text = settingViewModel.settings.keys.elementAt(index),
-                        onClick = {
-                            navController.navigate(settingViewModel.settings.values.elementAt(index))
-                        }
-                    )
+            Column {
+                // Show list at top
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    items(settingViewModel.settings.size) { index ->
+                        SettingsMenuItem(
+                            text = settingViewModel.settings.keys.elementAt(index),
+                            onClick = {
+                                navController.navigate(
+                                    settingViewModel.settings.values.elementAt(
+                                        index
+                                    )
+                                )
+                            }
+                        )
+                    }
                 }
+                SettingItem(
+                    text = "Clear cache",
+                    onClick = {
+                        settingViewModel.clearCache()
+                    }
+                )
             }
             // Shows version text centered at bottom
             Text(

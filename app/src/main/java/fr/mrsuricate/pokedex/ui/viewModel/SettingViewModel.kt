@@ -3,16 +3,15 @@ package fr.mrsuricate.pokedex.ui.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fr.mrsuricate.pokedex.domain.model.Language
-import fr.mrsuricate.pokedex.domain.repository.LanguageRepository
 import fr.mrsuricate.pokedex.domain.useCase.LanguageManager
+import fr.mrsuricate.pokedex.ui.navigation.SettingClearCache
 import fr.mrsuricate.pokedex.ui.navigation.SettingLanguage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class SettingViewModel(
-    private val repository: LanguageRepository,
-    private val language: LanguageManager
+    private val languageManager: LanguageManager
 ) : ViewModel() {
 
     private var _settings: MutableMap<String, String> = mutableMapOf()
@@ -24,28 +23,29 @@ class SettingViewModel(
 
     init {
         _settings["Langue"] = SettingLanguage.route
+        _settings["Vider le cache"] = SettingClearCache.route
         getLanguage()
     }
 
     private fun getLanguage() {
         viewModelScope.launch {
-            getLanguageResult()
-        }
-    }
-
-    private suspend fun getLanguageResult() {
-        val languageList = repository.getLanguageList()
-        if (languageList.isNotEmpty()) {
-            _language.addAll(languageList)
-            _languageFlow.value = _language.toList()
+            val languageList = languageManager.getAllLanguage()
+            if (languageList.isNotEmpty()) {
+                _language.addAll(languageList)
+                _languageFlow.value = _language.toList()
+            }
         }
     }
 
     fun getSelectedLangue(): String {
-        return this.language.getLanguage()
+        return this.languageManager.getLanguage()
     }
 
     fun setSelectedLangue(lang: String) {
-        this.language.setLanguage(lang)
+        this.languageManager.setLanguage(lang)
+    }
+
+    fun clearCache() {
+        languageManager.clearCache()
     }
 }

@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 val appModule = module {
     single { HomeViewModel(get()) }
-    single { SettingViewModel(get(), get()) }
+    single { SettingViewModel(get()) }
     single { DetailViewModel() }
     single {
         Retrofit.Builder()
@@ -29,8 +29,8 @@ val appModule = module {
     single {
         get<Retrofit>().create(PokemonApiService::class.java)
     }
-    single { LanguageManager() }
-    single<PokemonRepository> { PokemonRepositoryImpl(get()) }
+    single { LanguageManager(get(), get()) }
+    single<PokemonRepository> { PokemonRepositoryImpl(get(), get()) }
     single<LanguageRepository> { LanguageRepositoryImpl(get(), get()) }
     single { CacheManager(get()) }
     single { FileManager(androidContext()) }

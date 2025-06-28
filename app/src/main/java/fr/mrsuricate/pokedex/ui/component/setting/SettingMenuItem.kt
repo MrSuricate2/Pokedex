@@ -5,18 +5,21 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import fr.mrsuricate.pokedex.ui.component.detail.OrientationPreviews
 import fr.mrsuricate.pokedex.ui.component.detail.ThemePreviews
 import fr.mrsuricate.pokedex.ui.theme.PokedexTheme
 
 @Composable
-fun SettingItem(
-    modifier: Modifier = Modifier,
+fun SettingsMenuItem(
     text: String,
     onClick: () -> Unit
 ) {
@@ -36,17 +39,34 @@ fun SettingItem(
                     .weight(1f)
                     .padding(start = 8.dp),
             )
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = "See more",
+                tint = Color.Gray,
+            )
+        }
+    }
+
+}
+
+@ThemePreviews
+@Composable
+private fun PreviewTheme() {
+    PokedexTheme {
+        Surface {
+            SettingsMenuItem("Language") {
+
+            }
         }
     }
 }
 
 @OrientationPreviews
-@ThemePreviews
 @Composable
 private fun PreviewOrientation() {
     PokedexTheme {
         Surface {
-            SettingItem(text = "English") {
+            SettingsMenuItem("Language") {
 
             }
         }

@@ -1,6 +1,5 @@
 package fr.mrsuricate.pokedex.ui.screen
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,7 +11,7 @@ import fr.mrsuricate.pokedex.ui.component.topBar.SettingAppBar
 import fr.mrsuricate.pokedex.ui.viewModel.SettingViewModel
 import org.koin.androidx.compose.koinViewModel
 
-@SuppressLint("StateFlowValueCalledInComposition")
+
 @Composable
 fun SettingLanguageScreen(onGoBack: () -> Unit) {
     val settingViewModel: SettingViewModel = koinViewModel()
